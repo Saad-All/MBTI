@@ -9,7 +9,7 @@ This unified approach combines what would traditionally be separate backend and 
 ### Starter Template or Existing Project
 
 Based on the PRD and front-end specification, this is a **greenfield project** with specific technology recommendations:
-- **Framework:** Next.js 13+ with App Router (specified in PRD)
+- **Framework:** Next.js 14.2+ with App Router (specified in PRD)
 - **Deployment:** Portable containerized architecture supporting Vercel, AWS, GCP, and self-hosted
 - **Database:** MVP without database (localStorage), Phase 2 with Supabase PostgreSQL
 - **Internationalization:** Bilingual support (English/Arabic) with RTL layouts
@@ -90,7 +90,7 @@ This is the **DEFINITIVE technology selection** for the entire project. All deve
 | Category | Technology | Version | Purpose | Rationale |
 |----------|------------|---------|---------|-----------|
 | **Frontend Language** | TypeScript | 5.3+ | Type-safe development | Prevents runtime errors, essential for complex MBTI logic |
-| **Frontend Framework** | Next.js | 14.0+ | Full-stack React framework | SSR/SSG capabilities, App Router, built-in i18n |
+| **Frontend Framework** | Next.js | 14.2+ | Full-stack React framework | SSR/SSG capabilities, App Router, built-in i18n |
 | **UI Component Library** | Headless UI + Radix | 1.7+ / 2.0+ | Unstyled accessible components | Flexibility for custom SAIS 5-point UI, RTL support |
 | **State Management** | Zustand | 4.4+ | Lightweight state management | Simple API, TypeScript native, perfect for assessment flows |
 | **Styling Framework** | Tailwind CSS | 3.3+ | Utility-first styling | Rapid development, RTL support, consistent design system |
@@ -106,7 +106,7 @@ This is the **DEFINITIVE technology selection** for the entire project. All deve
 ```json
 {
   "dependencies": {
-    "next": "14.0.4",
+    "next": "14.2.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.3.3",
@@ -116,6 +116,7 @@ This is the **DEFINITIVE technology selection** for the entire project. All deve
     "@radix-ui/react-progress": "^1.0.3",
     "tailwindcss": "^3.3.6",
     "clsx": "^2.0.0",
+    "@heroicons/react": "^2.2.0",
     "zustand": "^4.4.7",
     "react-hook-form": "^7.48.2",
     "next-i18next": "^15.2.0",
@@ -125,7 +126,7 @@ This is the **DEFINITIVE technology selection** for the entire project. All deve
     "@types/react": "^18.2.37",
     "@types/node": "^20.9.0",
     "eslint": "^8.53.0",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "14.2.32",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
   }

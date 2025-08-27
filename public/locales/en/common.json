@@ -1,0 +1,21 @@
+{
+  "app": {
+    "title": "MBTI Coaching Platform",
+    "description": "Comprehensive MBTI assessment and coaching platform"
+  },
+  "navigation": {
+    "home": "Home",
+    "assessment": "Assessment",
+    "results": "Results",
+    "coaching": "Coaching"
+  },
+  "home": {
+    "welcome": "Welcome to MBTI Coaching Platform",
+    "subtitle": "Coming Soon",
+    "startAssessment": "Start Assessment",
+    "assessmentDescription": "Discover your personality type through comprehensive MBTI assessment",
+    "coachingSession": "Coaching Session",
+    "coachingDescription": "Get personalized coaching session with certified coach"
+  }
+}
+

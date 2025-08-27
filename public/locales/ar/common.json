@@ -1,0 +1,21 @@
+{
+  "app": {
+    "title": "منصة التدريب MBTI",
+    "description": "منصة شاملة لتقييم وتدريب MBTI"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "assessment": "التقييم",
+    "results": "النتائج",
+    "coaching": "التدريب"
+  },
+  "home": {
+    "welcome": "مرحباً بك في منصة التدريب MBTI",
+    "subtitle": "قريباً",
+    "startAssessment": "ابدأ التقييم",
+    "assessmentDescription": "اكتشف نوع شخصيتك من خلال تقييم MBTI الشامل",
+    "coachingSession": "جلسة التدريب",
+    "coachingDescription": "احصل على جلسة تدريب شخصية مع مدرب معتمد"
+  }
+}
+

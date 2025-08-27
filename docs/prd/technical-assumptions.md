@@ -24,7 +24,7 @@ Single Next.js application repository with clear folder organization for compone
 ### Additional Technical Assumptions and Requests
 
 **Enhanced Next.js Configuration:**
-- **Framework:** Next.js 13+ with Pages Router and built-in internationalization (i18n) support
+- **Framework:** Next.js 14.2+ with App Router and built-in internationalization (i18n) support
 - **Runtime:** Edge Runtime for API routes to maximize performance and handle concurrent users
 - **TypeScript:** Full TypeScript implementation for type safety across frontend and API routes
 - **Rendering Strategy:** Hybrid approach optimized for assessment flow performance with locale-based routing
@@ -98,4 +98,4 @@ Single Next.js application repository with clear folder organization for compone
 ```
 
 **This architecture delivers the MVP within 3-week timeline (including SAIS methodology) while building confidence in scalability and reliability.**
-
+
