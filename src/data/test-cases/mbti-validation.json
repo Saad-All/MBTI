@@ -1,0 +1,1119 @@
+{
+  "testCases": [
+    {
+      "id": "test-1",
+      "description": "Strong INTJ with binary responses (scenarios)",
+      "methodology": "scenarios",
+      "expectedType": "INTJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-1",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-1",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-1",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-1",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-2",
+      "description": "Clear ENFP with SAIS distribution",
+      "methodology": "sais",
+      "expectedType": "ENFP",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-2",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-2",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-2",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-2",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-2",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-2",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-2",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-2",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-2",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r10",
+          "sessionId": "test-2",
+          "questionId": "q10",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r11",
+          "sessionId": "test-2",
+          "questionId": "q11",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r12",
+          "sessionId": "test-2",
+          "questionId": "q12",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-3",
+      "description": "ISTJ with traits methodology",
+      "methodology": "traits",
+      "expectedType": "ISTJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-3",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-3",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-3",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-3",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-3",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-3",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-3",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-3",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-4",
+      "description": "ESTP with mixed confidence levels",
+      "methodology": "scenarios",
+      "expectedType": "ESTP",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-4",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-4",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-4",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-4",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-4",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-4",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-4",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-4",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-4",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-5",
+      "description": "INFJ with SAIS balanced distributions",
+      "methodology": "sais",
+      "expectedType": "INFJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-5",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-5",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-5",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-5",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-5",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-5",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-5",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-5",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-5",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r10",
+          "sessionId": "test-5",
+          "questionId": "q10",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r11",
+          "sessionId": "test-5",
+          "questionId": "q11",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r12",
+          "sessionId": "test-5",
+          "questionId": "q12",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-6",
+      "description": "ENTP interim 4-question test",
+      "methodology": "scenarios",
+      "expectedType": "ENTP",
+      "isInterim": true,
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-6",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-6",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-6",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-6",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-7",
+      "description": "ISFJ with all same preferences",
+      "methodology": "traits",
+      "expectedType": "ISFJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-7",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-7",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-7",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-7",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-7",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-7",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-7",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-7",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-7",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r10",
+          "sessionId": "test-7",
+          "questionId": "q10",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r11",
+          "sessionId": "test-7",
+          "questionId": "q11",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r12",
+          "sessionId": "test-7",
+          "questionId": "q12",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "A",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-8",
+      "description": "ENTJ with SAIS extreme preferences",
+      "methodology": "sais",
+      "expectedType": "ENTJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-8",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-8",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-8",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-8",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-8",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-8",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 0,
+          "distributionB": 5,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-8",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-8",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-8",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r10",
+          "sessionId": "test-8",
+          "questionId": "q10",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r11",
+          "sessionId": "test-8",
+          "questionId": "q11",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r12",
+          "sessionId": "test-8",
+          "questionId": "q12",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 5,
+          "distributionB": 0,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-9",
+      "description": "ISFP with mixed methodology preferences",
+      "methodology": "traits",
+      "expectedType": "ISFP",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-9",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-9",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-9",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-9",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-9",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-9",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-9",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-9",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "binary",
+          "selectedOption": "B",
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "test-10",
+      "description": "ESFJ with balanced SAIS scores",
+      "methodology": "sais",
+      "expectedType": "ESFJ",
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "test-10",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r2",
+          "sessionId": "test-10",
+          "questionId": "q2",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r3",
+          "sessionId": "test-10",
+          "questionId": "q3",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r4",
+          "sessionId": "test-10",
+          "questionId": "q4",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r5",
+          "sessionId": "test-10",
+          "questionId": "q5",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r6",
+          "sessionId": "test-10",
+          "questionId": "q6",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "S/N",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r7",
+          "sessionId": "test-10",
+          "questionId": "q7",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r8",
+          "sessionId": "test-10",
+          "questionId": "q8",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 1,
+          "distributionB": 4,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r9",
+          "sessionId": "test-10",
+          "questionId": "q9",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 2,
+          "distributionB": 3,
+          "mbtiDimension": "T/F",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r10",
+          "sessionId": "test-10",
+          "questionId": "q10",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r11",
+          "sessionId": "test-10",
+          "questionId": "q11",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 4,
+          "distributionB": 1,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        },
+        {
+          "responseId": "r12",
+          "sessionId": "test-10",
+          "questionId": "q12",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 2,
+          "mbtiDimension": "J/P",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "edge-1",
+      "description": "Invalid SAIS distribution total",
+      "methodology": "sais",
+      "expectError": true,
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "edge-1",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 3,
+          "distributionB": 3,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "edge-2",
+      "description": "Missing required fields",
+      "methodology": "scenarios",
+      "expectError": true,
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "edge-2",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "binary",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "edge-3",
+      "description": "Invalid SAIS combination 6-(-1)",
+      "methodology": "sais",
+      "expectError": true,
+      "responses": [
+        {
+          "responseId": "r1",
+          "sessionId": "edge-3",
+          "questionId": "q1",
+          "questionType": "core",
+          "responseType": "distribution",
+          "distributionA": 6,
+          "distributionB": -1,
+          "mbtiDimension": "E/I",
+          "timestamp": "2024-01-01T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

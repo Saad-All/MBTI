@@ -48,6 +48,8 @@
 8. Arabic language support with culturally appropriate consciousness-based terminology
 9. Scoring system tracks point distribution for accurate MBTI calculation
 10. Mobile-optimized point distribution interface with clear visual feedback
+11. The Data/Questions are already in MBTI\src\data\questions\SAIS_questions.md || src\data\results\MBTI_All_Types_Cleaned.md
+
 
 ### Story 2.4: Enhanced State Persistence for Extended Assessment
 **As a** user progressing through my chosen format,  
@@ -96,11 +98,11 @@
 
 ### Story 2.7: Depth-Focused Results for SAIS Methodology Users
 **As a** user who completed SAIS Methodology questions,  
-**I want** results that explain my consciousness patterns, internal energy dynamics, and spiritual-psychological insights,  
+**I want** results that explain my consciousness patterns, internal energy dynamics, and psychological insights,  
 **so that** I understand my personality from a depth perspective focused on inner awareness and consciousness development.
 
 **Acceptance Criteria:**
-1. Results page emphasizes consciousness, inner awareness, and spiritual-psychological understanding
+1. Results page emphasizes consciousness, inner awareness, and psychological understanding
 2. Insights organized by consciousness domains: energy source patterns, awareness styles, value-based decision making, life structure preferences
 3. Each insight includes examples of how personality type manifests in consciousness and spiritual development
 4. Recommendations focused on inner growth, consciousness expansion, and authentic self-expression
@@ -110,6 +112,7 @@
 8. Chatbot prompts focused on consciousness exploration, inner awareness, and spiritual development questions
 9. Arabic language support with appropriate spiritual and consciousness terminology
 10. Integration with SAIS scoring system ensuring accurate personality type calculation
+11. The Data/Questions are already in MBTI\src\data\questions\SAIS_questions.md || src\data\results\MBTI_All_Types_Cleaned.md
 
 ### Story 2.8: Dynamic Results Processing & Reveal Experience
 **As a** user completing either assessment format,  
@@ -125,4 +128,4 @@
 6. Smooth transition from processing to format-appropriate results presentation (life-focused, trait-focused, or depth-focused)
 7. Error handling provides graceful fallback if calculation fails, with retry options
 8. Performance optimization ensures sub-3-second processing time for user satisfaction
-
+

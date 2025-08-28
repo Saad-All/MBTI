@@ -1,13 +1,8 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { QuestionResponse } from '@/lib/types'
 
-export type AssessmentStep = 'welcome' | 'format-selection' | 'questions' | 'results' | 'coaching'
-
-export interface QuestionResponse {
-  questionId: string
-  score: number
-  timestamp: Date
-}
+export type AssessmentStep = 'welcome' | 'core-questions' | 'interim-results' | 'format-selection' | 'questions' | 'results' | 'coaching'
 
 export interface AssessmentState {
   sessionId: string
@@ -17,6 +12,12 @@ export interface AssessmentState {
   selectedFormat: 'scenarios' | 'traits' | 'sais' | null
   progress: number
   isComplete: boolean
+  interimResults?: {
+    mbtiType: string
+    confidence: number
+    insights: string[]
+    disclaimer: string
+  }
 }
 
 export interface UIState {
@@ -35,10 +36,13 @@ export interface AppStore {
   setCurrentStep: (step: AssessmentStep) => void
   setLanguage: (language: 'en' | 'ar') => void
   addResponse: (response: QuestionResponse) => void
+  setResponses: (responses: QuestionResponse[]) => void
   setSelectedFormat: (format: 'scenarios' | 'traits' | 'sais') => void
   updateProgress: (progress: number) => void
+  setProgress: (progress: number) => void
   completeAssessment: () => void
   resetAssessment: () => void
+  setInterimResults: (results: AssessmentState['interimResults']) => void
   
   // UI actions
   setTheme: (theme: 'light' | 'dark') => void
@@ -89,11 +93,33 @@ export const useAppStore = create<AppStore>()(
           })),
           
         addResponse: (response) =>
-          set((state) => ({
-            assessment: {
-              ...state.assessment,
-              responses: [...state.assessment.responses, response]
+          set((state) => {
+            // Check if response already exists for this question
+            const existingIndex = state.assessment.responses.findIndex(
+              r => r.questionId === response.questionId
+            )
+            
+            let newResponses
+            if (existingIndex >= 0) {
+              // Replace existing response
+              newResponses = [...state.assessment.responses]
+              newResponses[existingIndex] = response
+            } else {
+              // Add new response
+              newResponses = [...state.assessment.responses, response]
             }
+            
+            return {
+              assessment: {
+                ...state.assessment,
+                responses: newResponses
+              }
+            }
+          }),
+          
+        setResponses: (responses) =>
+          set((state) => ({
+            assessment: { ...state.assessment, responses }
           })),
           
         setSelectedFormat: (selectedFormat) =>
@@ -106,6 +132,11 @@ export const useAppStore = create<AppStore>()(
             assessment: { ...state.assessment, progress }
           })),
           
+        setProgress: (progress) =>
+          set((state) => ({
+            assessment: { ...state.assessment, progress }
+          })),
+          
         completeAssessment: () =>
           set((state) => ({
             assessment: { ...state.assessment, isComplete: true, currentStep: 'results' }
@@ -113,7 +144,12 @@ export const useAppStore = create<AppStore>()(
           
         resetAssessment: () =>
           set((state) => ({
-            assessment: initialAssessmentState
+            assessment: { ...initialAssessmentState, language: state.assessment.language }
+          })),
+          
+        setInterimResults: (interimResults) =>
+          set((state) => ({
+            assessment: { ...state.assessment, interimResults }
           })),
           
         // UI actions
@@ -148,4 +184,38 @@ export const useAppStore = create<AppStore>()(
     { name: 'MBTI App Store' }
   )
 )
+
+// Selector hooks for better performance
+export const useAssessmentStore = () => useAppStore((state) => ({
+  sessionId: state.assessment.sessionId,
+  currentStep: state.assessment.currentStep,
+  language: state.assessment.language,
+  responses: state.assessment.responses,
+  selectedFormat: state.assessment.selectedFormat,
+  progress: state.assessment.progress,
+  isComplete: state.assessment.isComplete,
+  interimResults: state.assessment.interimResults,
+  setSessionId: state.setSessionId,
+  setCurrentStep: state.setCurrentStep,
+  setLanguage: state.setLanguage,
+  addResponse: state.addResponse,
+  setResponses: state.setResponses,
+  setSelectedFormat: state.setSelectedFormat,
+  updateProgress: state.updateProgress,
+  setProgress: state.setProgress,
+  completeAssessment: state.completeAssessment,
+  resetAssessment: state.resetAssessment,
+  setInterimResults: state.setInterimResults,
+}))
+
+export const useUIStore = () => useAppStore((state) => ({
+  theme: state.ui.theme,
+  direction: state.ui.direction,
+  sidebarOpen: state.ui.sidebarOpen,
+  currentPage: state.ui.currentPage,
+  setTheme: state.setTheme,
+  setDirection: state.setDirection,
+  toggleSidebar: state.toggleSidebar,  
+  setCurrentPage: state.setCurrentPage,
+}))
 

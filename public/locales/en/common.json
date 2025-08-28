@@ -15,7 +15,95 @@
     "startAssessment": "Start Assessment",
     "assessmentDescription": "Discover your personality type through comprehensive MBTI assessment",
     "coachingSession": "Coaching Session",
-    "coachingDescription": "Get personalized coaching session with certified coach"
+    "coachingDescription": "Get personalized coaching session with certified coach",
+    "hero": {
+      "title": "Discover Your True Personality Type",
+      "subtitle": "Take our scientifically validated MBTI assessment and unlock deep insights about yourself",
+      "timeCommitment": "Only 8 minutes to complete",
+      "startButton": "Begin Your Journey",
+      "benefits": {
+        "title": "Why Take This Assessment?",
+        "benefit1": "Understand your unique strengths and preferences",
+        "benefit2": "Improve your relationships and communication",
+        "benefit3": "Make better career and life decisions",
+        "benefit4": "Get personalized coaching recommendations"
+      }
+    }
+  },
+  "assessment": {
+    "core": {
+      "title": "Core Questions",
+      "progress": "Question {{current}} of {{total}}",
+      "next": "Next",
+      "back": "Back",
+      "selectOption": "Please select an option",
+      "q1": {
+        "question": "When you need to recharge your vitality, you tend to:",
+        "optionA": "Spend time with friends or engage in social activities that energize me",
+        "optionB": "Take time alone to reflect, read, or pursue personal interests"
+      },
+      "q2": {
+        "question": "When dealing with the world around you, you prefer:",
+        "optionA": "Focus on concrete facts, practical details, and what's happening now",
+        "optionB": "Explore possibilities, patterns, and what could be in the future"
+      },
+      "q3": {
+        "question": "When making important decisions, you rely primarily on:",
+        "optionA": "Logic, objective analysis, and rational thinking",
+        "optionB": "Personal values, empathy, and how it affects people"
+      },
+      "q4": {
+        "question": "Your preferred lifestyle is one that allows you:",
+        "optionA": "To have things planned, organized, and decided in advance",
+        "optionB": "To stay flexible, spontaneous, and keep options open"
+      }
+    }
+  },
+  "interim": {
+    "title": "Your Preliminary Results",
+    "subtitle": "Based on your core responses",
+    "loading": "Calculating your preliminary results...",
+    "error": "Failed to calculate interim results. Please try again.",
+    "confidenceLevel": "Confidence: {{confidence}}%",
+    "insightsTitle": "Early Insights About You",
+    "note": "Note",
+    "continueButton": "Continue Assessment",
+    "readyToContinue": "Ready to Continue?",
+    "chooseFormat": "Choose your assessment format to continue."
+  },
+  "format": {
+    "title": "Choose Your Assessment Format",
+    "subtitle": "Select the question style that resonates with you",
+    "preparingAssessment": "Preparing your personalized assessment...",
+    "selectionLocked": "Your format selection is locked",
+    "continueButton": "Continue with Selected Format",
+    "questionStyle": "Question Style",
+    "scoringMethod": "Scoring Method",
+    "resultFocus": "Result Focus",
+    "scenarios": {
+      "title": "Life Choice Scenarios",
+      "description": "Real-world situations where you choose between two responses",
+      "questionStyle": "Practical life situations with binary choices",
+      "scoringMethod": "Direct preference selection",
+      "resultFocus": "How you apply your personality in daily life"
+    },
+    "traits": {
+      "title": "A/B Personality Traits",
+      "description": "Direct comparisons between personality trait pairs",
+      "questionStyle": "Clear trait comparisons with forced choice",
+      "scoringMethod": "Binary trait preference",
+      "resultFocus": "Your fundamental personality preferences"
+    },
+    "sais": {
+      "title": "SAIS Methodology",
+      "description": "Consciousness-focused questions with nuanced distribution",
+      "questionStyle": "Deep introspective questions",
+      "scoringMethod": "5-point distribution system",
+      "resultFocus": "The depth and balance of your preferences"
+    }
+  },
+  "common": {
+    "tryAgain": "Try Again"
   }
 }
 

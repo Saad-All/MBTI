@@ -1,0 +1,172 @@
+{
+  "assessment": {
+    "traits": {
+      "intro": {
+        "title": "مقارنة الصفات الشخصية",
+        "description": "ستواجه مجموعة من الصفات والسلوكيات المتضادة. اختر الصفة التي تشعر أنها تمثلك بشكل أكبر في معظم المواقف."
+      },
+      "questions": [
+        {
+          "id": "trait_1",
+          "dimension": "E/I",
+          "question": "أي من هذين الوصفين يناسبك أكثر؟",
+          "optionA": "اجتماعي ومنفتح",
+          "optionB": "متحفظ ومفكر",
+          "optionATendency": "E",
+          "optionBTendency": "I",
+          "context": "الطبيعة الاجتماعية"
+        },
+        {
+          "id": "trait_2",
+          "dimension": "E/I",
+          "question": "في المناسبات الاجتماعية، أنت عادة:",
+          "optionA": "محور الانتباه ومبادر في المحادثات",
+          "optionB": "مراقب هادئ يشارك في المحادثات المعمقة",
+          "optionATendency": "E",
+          "optionBTendency": "I",
+          "context": "السلوك في المناسبات الاجتماعية"
+        },
+        {
+          "id": "trait_3",
+          "dimension": "E/I",
+          "question": "تفضل العمل في:",
+          "optionA": "فريق كبير مع تفاعل مستمر",
+          "optionB": "مجموعة صغيرة أو بشكل فردي",
+          "optionATendency": "E",
+          "optionBTendency": "I",
+          "context": "بيئة العمل المفضلة"
+        },
+        {
+          "id": "trait_4",
+          "dimension": "S/N",
+          "question": "عند حل المشاكل، تعتمد أكثر على:",
+          "optionA": "الحقائق والمعلومات الملموسة",
+          "optionB": "الحدس والرؤى الإبداعية",
+          "optionATendency": "S",
+          "optionBTendency": "N",
+          "context": "أسلوب حل المشاكل"
+        },
+        {
+          "id": "trait_5",
+          "dimension": "S/N",
+          "question": "تهتم أكثر بـ:",
+          "optionA": "التفاصيل الدقيقة والواقع الحالي",
+          "optionB": "الصورة الكبيرة والاحتمالات المستقبلية",
+          "optionATendency": "S",
+          "optionBTendency": "N",
+          "context": "التركيز والاهتمام"
+        },
+        {
+          "id": "trait_6",
+          "dimension": "S/N",
+          "question": "تصف نفسك أكثر كـ:",
+          "optionA": "عملي ومتجذر في الواقع",
+          "optionB": "مبدع وحالم",
+          "optionATendency": "S",
+          "optionBTendency": "N",
+          "context": "وصف الذات"
+        },
+        {
+          "id": "trait_7",
+          "dimension": "T/F",
+          "question": "عند اتخاذ القرارات، تعطي أولوية أكبر لـ:",
+          "optionA": "المنطق والتحليل الموضوعي",
+          "optionB": "القيم الشخصية والاعتبارات الإنسانية",
+          "optionATendency": "T",
+          "optionBTendency": "F",
+          "context": "أساس اتخاذ القرارات"
+        },
+        {
+          "id": "trait_8",
+          "dimension": "T/F",
+          "question": "يراك الآخرون عادة كشخص:",
+          "optionA": "عادل ومنطقي",
+          "optionB": "متعاطف ومراع للمشاعر",
+          "optionATendency": "T",
+          "optionBTendency": "F",
+          "context": "كيف يراك الآخرون"
+        },
+        {
+          "id": "trait_9",
+          "dimension": "T/F",
+          "question": "في النقاشات، تهتم أكثر بـ:",
+          "optionA": "إثبات وجهة نظرك بالأدلة والمنطق",
+          "optionB": "فهم مشاعر الآخرين والوصول لتفاهم",
+          "optionATendency": "T",
+          "optionBTendency": "F",
+          "context": "أسلوب النقاش"
+        },
+        {
+          "id": "trait_10",
+          "dimension": "J/P",
+          "question": "تفضل الحياة التي تتسم بـ:",
+          "optionA": "التنظيم والجدولة المحكمة",
+          "optionB": "المرونة والعفوية",
+          "optionATendency": "J",
+          "optionBTendency": "P",
+          "context": "نمط الحياة المفضل"
+        },
+        {
+          "id": "trait_11",
+          "dimension": "J/P",
+          "question": "عندما تواجه مهاماً متعددة، تفضل:",
+          "optionA": "التخطيط المسبق وإنجاز المهام حسب الأولوية",
+          "optionB": "التعامل مع المهام حسب الحاجة والظروف",
+          "optionATendency": "J",
+          "optionBTendency": "P",
+          "context": "إدارة المهام المتعددة"
+        },
+        {
+          "id": "trait_12",
+          "dimension": "J/P",
+          "question": "تشعر بالراحة أكثر عندما تكون الأمور:",
+          "optionA": "محسومة ومقررة مسبقاً",
+          "optionB": "مفتوحة ولديك خيارات متعددة",
+          "optionATendency": "J",
+          "optionBTendency": "P",
+          "context": "الشعور بالراحة مع عدم اليقين"
+        },
+        {
+          "id": "trait_13",
+          "dimension": "E/I",
+          "question": "بعد التفاعل الاجتماعي المكثف، عادة ما:",
+          "optionA": "تشعر بالحيوية والنشاط وتريد المزيد",
+          "optionB": "تحتاج إلى وقت هادئ لاستعادة طاقتك",
+          "optionATendency": "E",
+          "optionBTendency": "I",
+          "context": "رد الفعل بعد التفاعل الاجتماعي"
+        },
+        {
+          "id": "trait_14",
+          "dimension": "S/N",
+          "question": "عند تقييم فكرة جديدة، تركز أكثر على:",
+          "optionA": "إمكانية التطبيق العملي والنتائج الملموسة",
+          "optionB": "الإمكانيات الإبداعية والمعاني الأعمق",
+          "optionATendency": "S",
+          "optionBTendency": "N",
+          "context": "تقييم الأفكار الجديدة"
+        },
+        {
+          "id": "trait_15",
+          "dimension": "T/F",
+          "question": "في المواقف الصعبة، تميل إلى:",
+          "optionA": "التحليل البارد والبحث عن حلول منطقية",
+          "optionB": "مراعاة تأثير الحلول على الأشخاص المعنيين",
+          "optionATendency": "T",
+          "optionBTendency": "F",
+          "context": "التعامل مع المواقف الصعبة"
+        },
+        {
+          "id": "trait_16",
+          "dimension": "J/P",
+          "question": "مقاربتك للمشاريع الجديدة عادة ما تكون:",
+          "optionA": "التخطيط المفصل قبل البدء",
+          "optionB": "البدء والتكيف مع التطورات أثناء العمل",
+          "optionATendency": "J",
+          "optionBTendency": "P",
+          "context": "مقاربة المشاريع الجديدة"
+        }
+      ]
+    }
+  }
+}

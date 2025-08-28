@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(md-tree:*)"
+      "Bash(md-tree:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(pkill:*)"
     ],
     "deny": []
   }

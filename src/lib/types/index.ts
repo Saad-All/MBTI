@@ -36,6 +36,15 @@ export interface QuestionResponse {
   score: number
   tendency?: string
   timestamp: Date
+  // Extended for scoring algorithm
+  responseId: string
+  sessionId: string
+  questionType: 'core' | 'extended'
+  responseType: 'binary' | 'distribution'
+  selectedOption?: 'A' | 'B'  // For binary responses
+  distributionA?: number // 0-5 for SAIS
+  distributionB?: number // 0-5 for SAIS
+  mbtiDimension: MBTIDimension
 }
 
 // Assessment Results
@@ -94,5 +103,62 @@ export interface FormValidationRules {
   min?: number | { value: number; message: string }
   max?: number | { value: number; message: string }
   pattern?: { value: RegExp; message: string }
+}
+
+// Scoring Types
+export type MethodologyType = 'scenarios' | 'traits' | 'sais'
+
+export interface ScoringInput {
+  sessionId: string
+  responses: QuestionResponse[]
+  methodology: MethodologyType
+  isInterim?: boolean // For 4-question preliminary results
+}
+
+export interface DimensionScore {
+  dimension: MBTIDimension
+  rawScoreA: number // E, S, T, J
+  rawScoreB: number // I, N, F, P
+  preference: string // The winning preference
+  confidence: number // Confidence percentage
+}
+
+export interface ScoringResult {
+  sessionId: string
+  mbtiType: MBTIType
+  dimensionScores: DimensionScore[]
+  overallConfidence: number
+  methodology: MethodologyType
+  isInterim: boolean
+  totalResponses: number
+}
+
+export interface CalculationOptions {
+  enableCaching?: boolean
+  validateResponses?: boolean
+  includeDebugInfo?: boolean
+}
+
+// Validation Types
+export interface ValidationResult {
+  isValid: boolean
+  errors: ValidationError[]
+}
+
+export interface ValidationError {
+  field: string
+  message: string
+  code: string
+}
+
+// SAIS Specific Types
+export interface SAISValidationResult extends ValidationResult {
+  distributionTotals?: { [questionId: string]: number }
+}
+
+// MBTIResults for API response
+export interface MBTIResults extends ScoringResult {
+  calculatedAt: Date
+  cacheHit?: boolean
 }
 

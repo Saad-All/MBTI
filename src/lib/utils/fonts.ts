@@ -7,14 +7,24 @@ export const inter = Inter({
   variable: '--font-inter',
 })
 
-// For now, we'll use Google Fonts for Arabic until custom fonts are added
-// Future: Replace with local font files when available
-// export const ibmPlexArabic = localFont({ ... })
-// export const notoSansArabic = localFont({ ... })
+// IBM Plex Arabic from Google Fonts
+import { IBM_Plex_Sans_Arabic } from 'next/font/google'
+
+export const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-arabic',
+})
 
 // Font class helper
 export function getFontClass(locale: string): string {
-  // For Arabic, we'll rely on CSS font-family fallbacks defined in globals.css
-  // Future: Return custom font variables when local fonts are added
+  if (locale === 'ar') {
+    return `${inter.variable} ${ibmPlexArabic.variable}`
+  }
   return inter.variable
+}
+
+export function getFontFamily(locale: string): string {
+  return locale === 'ar' ? 'font-arabic' : 'font-sans'
 }
