@@ -97,6 +97,6 @@
 5. Recovery system detects existing progress and offers to continue or restart
 6. State includes question responses, current position, format selection, interim results, and language preference
 7. Graceful handling of storage quota exceeded or privacy settings blocking local storage
-8. Assessment session expires after 24 hours to maintain data hygiene
+8. Assessment session expires after 3 hours to maintain data hygiene
 9. Cross-language state recovery maintains assessment integrity when switching languages
-
+

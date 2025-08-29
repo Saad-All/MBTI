@@ -1,0 +1,131 @@
+{
+  "assessment": {
+    "sais": {
+      "intro": {
+        "title": "SAIS 5-Point Distribution Methodology",
+        "description": "You will be presented with a series of statements. For each statement, distribute 5 points between the two options based on your level of agreement. The total must always equal 5 points."
+      },
+      "instructions": {
+        "title": "Distribution Instructions:",
+        "examples": [
+          "5-0: Completely agree with the first option, disagree with the second",
+          "4-1: Strongly agree with first with slight agreement on second",
+          "3-2: Lean more toward first but some truth in second",
+          "2-3: Lean more toward second but some truth in first",
+          "1-4: Strongly agree with second with slight agreement on first",
+          "0-5: Completely agree with the second option, disagree with the first"
+        ]
+      },
+      "questions": [
+        {
+          "id": "sais_1",
+          "dimension": "E/I",
+          "statement": "When I need to recharge my vitality, I tend to:",
+          "optionA": "Immerse myself in my rich inner world of thoughts and feelings, as if connecting with a deep, calm root center",
+          "optionB": "Interact with the wide spectrum of activities and people in my external environment, drawing vitality from their interaction",
+          "optionATendency": "I",
+          "optionBTendency": "E"
+        },
+        {
+          "id": "sais_2",
+          "dimension": "E/I",
+          "statement": "In dialogue aimed at exploring a new idea, my approach is:",
+          "optionA": "Receive the idea and contemplate it internally first, then share the essence of my insights with focus",
+          "optionB": "Think out loud and directly interact verbally with others, where my vision forms and clarifies through dialogue dynamics",
+          "optionATendency": "I",
+          "optionBTendency": "E"
+        },
+        {
+          "id": "sais_3",
+          "dimension": "E/I",
+          "statement": "What I consider my 'real world' from which I derive my existence is:",
+          "optionA": "My deep internal system of thoughts and feelings, which others cannot see directly but which forms my identity",
+          "optionB": "The network of tangible events, interactions and activities that I participate in with others in my environment",
+          "optionATendency": "I",
+          "optionBTendency": "E"
+        },
+        {
+          "id": "sais_4",
+          "dimension": "S/N",
+          "statement": "When dealing with the world around me, I prefer:",
+          "optionA": "Diving into the sea of possibilities and hidden meanings, using the 'third eye' insight to see beyond the familiar",
+          "optionB": "Interacting with tangible physical reality, relying on my five senses to gather precise and solid facts",
+          "optionATendency": "N",
+          "optionBTendency": "S"
+        },
+        {
+          "id": "sais_5",
+          "dimension": "S/N",
+          "statement": "When starting a new project, what excites me first is:",
+          "optionA": "The overall vision and unlimited possibilities that could emerge from the project",
+          "optionB": "The available facts and clear practical steps that can be taken here and now",
+          "optionATendency": "N",
+          "optionBTendency": "S"
+        },
+        {
+          "id": "sais_6",
+          "dimension": "S/N",
+          "statement": "I find greater value in:",
+          "optionA": "Abstract concepts and theories that explain 'why' and 'how' the universe works",
+          "optionB": "Tangible facts and physical details that describe 'what is' actually present",
+          "optionATendency": "N",
+          "optionBTendency": "S"
+        },
+        {
+          "id": "sais_7",
+          "dimension": "T/F",
+          "statement": "When making a decision that affects others, I primarily rely on:",
+          "optionA": "Logical and objective analysis of facts, as if building a coherent mental structure ensuring fairness and efficiency",
+          "optionB": "My inner value compass and harmony with others' feelings, connecting to the 'heart' center to ensure harmony and mutual understanding",
+          "optionATendency": "T",
+          "optionBTendency": "F"
+        },
+        {
+          "id": "sais_8",
+          "dimension": "T/F",
+          "statement": "How do I reach my firm conclusions and convictions?",
+          "optionA": "Through a logical path and precise analysis of data, step by step, reaching an inevitable and proven conclusion",
+          "optionB": "Through what I feel and believe based on my value system and deep life experiences with people",
+          "optionATendency": "T",
+          "optionBTendency": "F"
+        },
+        {
+          "id": "sais_9",
+          "dimension": "T/F",
+          "statement": "The image I'm comfortable having people reflect about me is:",
+          "optionA": "Someone capable of deep analysis and making decisions based on reason and logic",
+          "optionB": "Someone capable of feeling for others and understanding their motivations and human values",
+          "optionATendency": "T",
+          "optionBTendency": "F"
+        },
+        {
+          "id": "sais_10",
+          "dimension": "J/P",
+          "statement": "In managing my tasks and responsibilities, I prefer:",
+          "optionA": "Establishing a clear time structure and system to follow, creating a sense of control and predictability",
+          "optionB": "Leaving room for flexibility and spontaneity, allowing options to remain open as long as possible",
+          "optionATendency": "J",
+          "optionBTendency": "P"
+        },
+        {
+          "id": "sais_11",
+          "dimension": "J/P",
+          "statement": "When making an important decision, my approach is:",
+          "optionA": "Gather necessary information, analyze it quickly, then make a decisive decision to move forward",
+          "optionB": "Explore all angles and potential options, keeping the door open for more information before committing to one path",
+          "optionATendency": "J",
+          "optionBTendency": "P"
+        },
+        {
+          "id": "sais_12",
+          "dimension": "J/P",
+          "statement": "My preferred lifestyle is one that allows me:",
+          "optionA": "The ability to predict and know what is expected of me in advance, giving me a sense of stability",
+          "optionB": "Freedom to change and explore new and surprising paths, keeping my vitality renewed",
+          "optionATendency": "J",
+          "optionBTendency": "P"
+        }
+      ]
+    }
+  }
+}

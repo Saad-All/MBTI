@@ -3,10 +3,10 @@
 ## Table of Contents
 
 - [MBTI Coaching Platform - Full-Stack Architecture](#table-of-contents)
-  - [1. Introduction](#1-introduction)
-  - [2. High Level Architecture](#2-high-level-architecture)
-  - [3. Tech Stack](#3-tech-stack)
-  - [4. Data Models](#4-data-models)
+  - [1. Introduction](#introduction)
+  - [2. High Level Architecture](#high-level-architecture)
+  - [3. Tech Stack](#tech-stack)
+  - [4. Data Models](#data-models)
   - [5. API Specification](#5-api-specification)
   - [6. Components](#6-components)
   - [7. External APIs](#7-external-apis)

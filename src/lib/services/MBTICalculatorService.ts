@@ -53,8 +53,13 @@ export class MBTICalculatorService {
 
       for (const response of dimensionResponses) {
         if (methodology === 'sais' && response.responseType === 'distribution') {
-          rawScoreA += response.distributionA || 0
-          rawScoreB += response.distributionB || 0
+          // For SAIS, we need to consider the tendency mapping
+          // The distribution points represent strength of preference
+          const pointsA = response.distributionA || 0
+          const pointsB = response.distributionB || 0
+          
+          rawScoreA += pointsA
+          rawScoreB += pointsB
         } else if (response.responseType === 'binary') {
           if (response.selectedOption === 'A') {
             rawScoreA += 1
@@ -64,8 +69,8 @@ export class MBTICalculatorService {
         }
       }
 
-      const preference = this.determinePreference(dimension, rawScoreA, rawScoreB)
-      const confidence = this.calculateConfidence(rawScoreA, rawScoreB)
+      const preference = this.determinePreference(dimension, rawScoreA, rawScoreB, dimensionResponses)
+      const confidence = this.calculateConfidence(rawScoreA, rawScoreB, methodology)
 
       scores.push({
         dimension,
@@ -82,8 +87,44 @@ export class MBTICalculatorService {
   private determinePreference(
     dimension: MBTIDimension,
     scoreA: number,
-    scoreB: number
+    scoreB: number,
+    dimensionResponses?: QuestionResponse[]
   ): string {
+    // For SAIS, we need to check the tendency mapping from the responses
+    if (dimensionResponses && dimensionResponses.length > 0) {
+      const saisResponse = dimensionResponses.find(r => r.responseType === 'distribution')
+      if (saisResponse && saisResponse.tendency) {
+        // If we have SAIS responses, use the tendency directly from the response
+        // which was determined based on the question's optionATendency/optionBTendency
+        const tendencyCounts: Record<string, number> = {}
+        
+        for (const response of dimensionResponses) {
+          if (response.tendency) {
+            if (!tendencyCounts[response.tendency]) {
+              tendencyCounts[response.tendency] = 0
+            }
+            // Weight by distribution points for SAIS
+            if (response.responseType === 'distribution') {
+              const weight = response.selectedOption === 'A' 
+                ? response.distributionA || 0 
+                : response.distributionB || 0
+              tendencyCounts[response.tendency] += weight
+            } else {
+              tendencyCounts[response.tendency] += 1
+            }
+          }
+        }
+        
+        // Return the tendency with the highest count
+        const preferences = Object.entries(tendencyCounts)
+        if (preferences.length > 0) {
+          preferences.sort((a, b) => b[1] - a[1])
+          return preferences[0][0]
+        }
+      }
+    }
+    
+    // Fallback to standard mapping for non-SAIS or if tendencies not found
     const dimensionMap: Record<MBTIDimension, { A: string; B: string }> = {
       'E/I': { A: 'E', B: 'I' },
       'S/N': { A: 'S', B: 'N' },
@@ -94,12 +135,28 @@ export class MBTICalculatorService {
     return scoreA > scoreB ? dimensionMap[dimension].A : dimensionMap[dimension].B
   }
 
-  private calculateConfidence(scoreA: number, scoreB: number): number {
+  private calculateConfidence(scoreA: number, scoreB: number, methodology?: MethodologyType): number {
     const total = scoreA + scoreB
     if (total === 0) return 50
 
     const higher = Math.max(scoreA, scoreB)
-    const confidence = (higher / total) * 100
+    let confidence = (higher / total) * 100
+    
+    // For SAIS methodology, apply a different confidence scale
+    // since the 5-point distribution allows for more nuanced responses
+    if (methodology === 'sais') {
+      // SAIS confidence scale:
+      // 5-0 distribution = 100% confidence
+      // 4-1 distribution = 80% confidence  
+      // 3-2 distribution = 60% confidence
+      const difference = Math.abs(scoreA - scoreB)
+      const maxPossibleDifference = total
+      
+      if (maxPossibleDifference > 0) {
+        // Scale confidence based on the strength of the preference
+        confidence = 50 + (difference / maxPossibleDifference) * 50
+      }
+    }
     
     return Math.round(confidence)
   }
@@ -149,5 +206,37 @@ export class MBTICalculatorService {
     return validCombinations.some(
       ([a, b]) => distributionA === a && distributionB === b
     )
+  }
+
+  public validateSAISDistribution(pointA: number, pointB: number): boolean {
+    return (
+      pointA >= 0 && pointA <= 5 &&
+      pointB >= 0 && pointB <= 5 &&
+      pointA + pointB === 5 &&
+      Number.isInteger(pointA) &&
+      Number.isInteger(pointB)
+    )
+  }
+
+  // Test method for SAIS scoring verification
+  public testSAISScoring(responses: QuestionResponse[]): void {
+    console.log('SAIS Scoring Test:')
+    console.log('==================')
+    
+    const result = this.calculateMBTI({
+      sessionId: 'test-session',
+      responses,
+      methodology: 'sais',
+      isInterim: false,
+    })
+    
+    console.log('MBTI Type:', result.mbtiType)
+    console.log('Overall Confidence:', result.overallConfidence + '%')
+    console.log('\nDimension Breakdown:')
+    
+    result.dimensionScores.forEach(score => {
+      console.log(`${score.dimension}: ${score.preference} (${score.confidence}% confidence)`)
+      console.log(`  Raw scores: A=${score.rawScoreA}, B=${score.rawScoreB}`)
+    })
   }
 }

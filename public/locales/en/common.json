@@ -31,6 +31,16 @@
     }
   },
   "assessment": {
+    "sais": {
+      "title": "SAIS Assessment",
+      "progress": "Question {{current}} of {{total}}",
+      "next": "Next",
+      "back": "Back",
+      "complete": "Complete Assessment",
+      "points": "points",
+      "validDistribution": "Distribution is valid (5 points total)",
+      "invalidDistribution": "Invalid distribution: {{total}} points (must be 5)"
+    },
     "core": {
       "title": "Core Questions",
       "progress": "Question {{current}} of {{total}}",
@@ -102,8 +112,50 @@
       "resultFocus": "The depth and balance of your preferences"
     }
   },
+  "recovery": {
+    "checking": "Checking for previous session...",
+    "foundSession": "Previous Session Found",
+    "description": "We found a previous assessment session. Would you like to continue where you left off?",
+    "progress": "Progress",
+    "lastSaved": "Last saved",
+    "savedTo": "Saved to",
+    "format": "Format",
+    "continue": "Continue Previous Session",
+    "startFresh": "Start Fresh",
+    "restoring": "Restoring session...",
+    "note": "Your progress is automatically saved as you go.",
+    "expired": {
+      "title": "Session Expired",
+      "message": "Your previous session has expired after 3 hours. Please start a new assessment."
+    },
+    "error": "Recovery Error",
+    "justNow": "Just now",
+    "minutesAgo": "{{count}} minute ago",
+    "minutesAgo_plural": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hour ago",
+    "hoursAgo_plural": "{{count}} hours ago"
+  },
+  "sessionExpiration": {
+    "warning": {
+      "title": "Session Expiring Soon",
+      "message": "Your assessment session will expire soon. Extend to save your progress."
+    },
+    "expired": {
+      "title": "Session Expired",
+      "message": "Your assessment session has expired after 3 hours of inactivity. Please start a new session.",
+      "saveProgress": "Save Progress",
+      "startNew": "Start New Assessment",
+      "note": "Sessions expire after 3 hours to protect your privacy."
+    },
+    "timeRemaining": "Time remaining",
+    "extend": "Extend Session",
+    "dismiss": "Dismiss"
+  },
   "common": {
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "close": "Close",
+    "cancel": "Cancel",
+    "unknown": "Unknown"
   }
 }
 
