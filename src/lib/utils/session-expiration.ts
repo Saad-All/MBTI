@@ -1,5 +1,7 @@
 // Session expiration utilities
-export const SESSION_TIMEOUT = 3 * 60 * 60 * 1000 // 3 hours in milliseconds
+import { SessionService } from '@/lib/services/SessionService'
+
+export const SESSION_TIMEOUT = 3 * 60 * 60 * 1000 // 3 hours in milliseconds (kept for backward compatibility)
 
 export interface SessionExpiration {
   startTime: Date
@@ -19,7 +21,16 @@ export class SessionExpirationManager {
    */
   calculateExpiration(startTime: Date): SessionExpiration {
     const now = new Date()
-    const expiresAt = new Date(startTime.getTime() + SESSION_TIMEOUT)
+    
+    // Use SessionService for accurate phase-based timeouts
+    const sessionData = SessionService.getSessionData()
+    let timeout = SESSION_TIMEOUT
+    
+    if (sessionData) {
+      timeout = SessionService.getTimeoutForPhase(sessionData.phase)
+    }
+    
+    const expiresAt = new Date(startTime.getTime() + timeout)
     const timeRemaining = Math.max(0, expiresAt.getTime() - now.getTime())
     const isExpired = timeRemaining === 0
     
@@ -39,10 +50,21 @@ export class SessionExpirationManager {
   /**
    * Check if a session is expired
    */
-  isSessionExpired(startTime: Date | string): boolean {
-    const start = typeof startTime === 'string' ? new Date(startTime) : startTime
-    const expiration = this.calculateExpiration(start)
-    return expiration.isExpired
+  isSessionExpired(startTime?: Date | string): boolean {
+    // First check with SessionService
+    const sessionData = SessionService.getSessionData()
+    if (sessionData) {
+      return SessionService.isSessionExpired(sessionData)
+    }
+    
+    // Fallback to legacy calculation if no SessionService data
+    if (startTime) {
+      const start = typeof startTime === 'string' ? new Date(startTime) : startTime
+      const expiration = this.calculateExpiration(start)
+      return expiration.isExpired
+    }
+    
+    return true
   }
 
   /**
@@ -280,6 +302,9 @@ export async function cleanupExpiredClientSessions(): Promise<number> {
   let cleanedCount = 0
 
   try {
+    // Clean expired sessions using SessionService
+    SessionService.cleanupExpiredSession()
+    
     // Clean localStorage
     const localKeys = Object.keys(localStorage).filter(key => key.startsWith('session-'))
     

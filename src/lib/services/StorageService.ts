@@ -1,3 +1,5 @@
+import { optimizedStorage } from './OptimizedStorageService'
+
 type StorageLayer = 'localStorage' | 'sessionStorage' | 'memory'
 
 interface StorageResult<T = any> {
@@ -29,6 +31,18 @@ class StorageService {
    * Get item with fallback chain: localStorage -> sessionStorage -> memory
    */
   getItem<T = any>(key: string): StorageResult<T> {
+    // Check if this might be optimized SAIS data
+    if (this.mightBeSAISSession(key)) {
+      const saisData = optimizedStorage.retrieveSAISAssessment(key)
+      if (saisData) {
+        return {
+          success: true,
+          data: saisData as T,
+          layer: 'localStorage'
+        }
+      }
+    }
+    
     // Try localStorage first
     const localResult = this.getFromLocalStorage<T>(key)
     if (localResult.success) {
@@ -58,6 +72,22 @@ class StorageService {
    * Set item across available storage layers with graceful fallback
    */
   setItem(key: string, value: any): StorageResult {
+    // Check if this is SAIS assessment data that needs optimization
+    if (this.isSAISAssessmentData(key, value)) {
+      const optimized = optimizedStorage.storeSAISAssessment(key, value)
+      if (optimized) {
+        return {
+          success: true,
+          data: { 
+            savedTo: 1,
+            layers: 'optimized',
+            optimization: 'sais-compressed'
+          },
+          layer: 'localStorage'
+        }
+      }
+    }
+    
     const serializedValue = JSON.stringify(value)
     let successCount = 0
     const errors: string[] = []
@@ -97,6 +127,11 @@ class StorageService {
    */
   removeItem(key: string): StorageResult {
     let successCount = 0
+    
+    // Clean up optimized SAIS data if exists
+    if (this.mightBeSAISSession(key)) {
+      optimizedStorage.cleanupSAISData(key)
+    }
 
     // Remove from localStorage
     if (this.isLocalStorageAvailable()) {
@@ -306,6 +341,35 @@ class StorageService {
     }
   }
 
+  /**
+   * Check if data is SAIS assessment that needs optimization
+   */
+  private isSAISAssessmentData(key: string, value: any): boolean {
+    return key.startsWith('session-') && 
+           value?.selectedFormat === 'sais' && 
+           value?.extendedResponses?.length > 0
+  }
+  
+  /**
+   * Check if key might be a SAIS session
+   */
+  private mightBeSAISSession(key: string): boolean {
+    return key.startsWith('session-')
+  }
+  
+  /**
+   * Get storage health including SAIS optimization metrics
+   */
+  getExtendedHealth(): StorageHealth & { saisOptimization?: any } {
+    const baseHealth = this.checkStorageHealth()
+    const saisHealth = optimizedStorage.checkSAISStorageHealth()
+    
+    return {
+      ...baseHealth,
+      saisOptimization: saisHealth
+    }
+  }
+  
   // Cleanup method for component unmounting
   destroy(): void {
     this.memoryStorage.clear()

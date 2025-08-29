@@ -6,10 +6,36 @@ import {
   ScoringResult,
   DimensionScore,
   MethodologyType,
+  ConsciousnessProfile,
+  ConsciousnessDimension,
 } from '@/lib/types'
 
 export class MBTICalculatorService {
   private static instance: MBTICalculatorService
+
+  // SAIS Consciousness Domain Mapping (Arabic)
+  private readonly consciousnessDomains = {
+    'E/I': {
+      name: 'مصدر حيويتك وتفاعلك',
+      E: { name: 'التفاعل الخارجي', description: 'استمداد الحيوية من التفاعل مع الطيف الواسع من النشاطات والأشخاص' },
+      I: { name: 'الانغماس الداخلي', description: 'الانغماس في عالمك الداخلي الغني والاتصال بمركز جذري عميق وهادئ' }
+    },
+    'S/N': {
+      name: 'طريقة استقبالك للمعلومات',
+      S: { name: 'الواقع المادي', description: 'التفاعل مع الواقع المادي الملموس واستخدام الحواس الخمس' },
+      N: { name: 'البصيرة الحدسية', description: 'الغوص في بحر الاحتمالات والمعاني الخفية باستخدام العين الثالثة' }
+    },
+    'T/F': {
+      name: 'مركز اتخاذ القرار',
+      T: { name: 'التحليل المنطقي', description: 'تحليل منطقي وموضوعي للحقائق وبناء هيكل عقلي متماسك' },
+      F: { name: 'بوصلة القيم الداخلية', description: 'الاتصال بمركز القلب والانسجام مع مشاعر الآخرين وقيمك الداخلية' }
+    },
+    'J/P': {
+      name: 'تنظيم عالمك الخارجي',
+      J: { name: 'الهيكل المنظم', description: 'وضع هيكل زمني ونظام واضح للسيطرة والتنبؤ بالأحداث' },
+      P: { name: 'المرونة العفوية', description: 'ترك مساحة للمرونة والعفوية وإبقاء الخيارات مفتوحة' }
+    }
+  }
 
   private constructor() {}
 
@@ -27,6 +53,12 @@ export class MBTICalculatorService {
     const mbtiType = this.determineMBTIType(dimensionScores)
     const overallConfidence = this.calculateOverallConfidence(dimensionScores)
 
+    // Generate consciousness profile for SAIS methodology
+    let consciousnessProfile: ConsciousnessProfile | undefined = undefined
+    if (methodology === 'sais') {
+      consciousnessProfile = this.generateConsciousnessProfile(dimensionScores)
+    }
+
     return {
       sessionId,
       mbtiType,
@@ -35,6 +67,7 @@ export class MBTICalculatorService {
       methodology,
       isInterim,
       totalResponses: responses.length,
+      consciousnessProfile,
     }
   }
 
@@ -72,12 +105,39 @@ export class MBTICalculatorService {
       const preference = this.determinePreference(dimension, rawScoreA, rawScoreB, dimensionResponses)
       const confidence = this.calculateConfidence(rawScoreA, rawScoreB, methodology)
 
+      // SAIS consciousness enhancements
+      let consciousnessPercentage: number | undefined = undefined
+      let consciousnessDomain: string | undefined = undefined
+      let totalPossiblePoints: number | undefined = undefined
+
+      if (methodology === 'sais') {
+        totalPossiblePoints = 15 // 3 questions × 5 points per question
+        
+        // Calculate consciousness percentage based on tendency tracking for SAIS
+        let winningScore = 0
+        for (const response of dimensionResponses) {
+          if (response.tendency === preference) {
+            // Add the distribution points for this tendency
+            if (response.responseType === 'distribution') {
+              const points = response.selectedOption === 'A' ? response.distributionA! : response.distributionB!
+              winningScore += points
+            }
+          }
+        }
+        
+        consciousnessPercentage = Math.round((winningScore / totalPossiblePoints) * 100)
+        consciousnessDomain = this.consciousnessDomains[dimension].name
+      }
+
       scores.push({
         dimension,
         rawScoreA,
         rawScoreB,
         preference,
         confidence,
+        consciousnessPercentage,
+        consciousnessDomain,
+        totalPossiblePoints,
       })
     }
 
@@ -218,6 +278,44 @@ export class MBTICalculatorService {
     )
   }
 
+  // SAIS Consciousness Profile Generation
+  private generateConsciousnessProfile(dimensionScores: DimensionScore[]): ConsciousnessProfile {
+    const getConsciousnessDimension = (dimension: MBTIDimension): ConsciousnessDimension => {
+      const score = dimensionScores.find(s => s.dimension === dimension)!
+      const domainData = this.consciousnessDomains[dimension]
+      
+      // Safely access preference data with type checking
+      const preferenceKey = score.preference as 'E' | 'I' | 'S' | 'N' | 'T' | 'F' | 'J' | 'P'
+      const preferenceData = (domainData as any)[preferenceKey] as { name: string; description: string }
+      
+      if (!preferenceData) {
+        console.warn(`No preference data found for ${dimension}:${score.preference}`)
+        return {
+          dimension,
+          preference: score.preference,
+          percentage: score.consciousnessPercentage || 0,
+          arabicDomainName: score.preference,
+          consciousnessDescription: 'وصف غير متاح',
+        }
+      }
+
+      return {
+        dimension,
+        preference: score.preference,
+        percentage: score.consciousnessPercentage || 0,
+        arabicDomainName: preferenceData.name,
+        consciousnessDescription: preferenceData.description,
+      }
+    }
+
+    return {
+      energySourcePattern: getConsciousnessDimension('E/I'),
+      awarenessStyle: getConsciousnessDimension('S/N'), 
+      decisionMakingCenter: getConsciousnessDimension('T/F'),
+      lifeStructurePreference: getConsciousnessDimension('J/P'),
+    }
+  }
+
   // Test method for SAIS scoring verification
   public testSAISScoring(responses: QuestionResponse[]): void {
     console.log('SAIS Scoring Test:')
@@ -237,6 +335,22 @@ export class MBTICalculatorService {
     result.dimensionScores.forEach(score => {
       console.log(`${score.dimension}: ${score.preference} (${score.confidence}% confidence)`)
       console.log(`  Raw scores: A=${score.rawScoreA}, B=${score.rawScoreB}`)
+      if (score.consciousnessPercentage) {
+        console.log(`  Consciousness: ${score.consciousnessPercentage}% - ${score.consciousnessDomain}`)
+      }
     })
+
+    // Display consciousness profile
+    if (result.consciousnessProfile) {
+      console.log('\nConsciousness Profile:')
+      console.log('Energy Source:', result.consciousnessProfile.energySourcePattern.arabicDomainName, 
+                  `(${result.consciousnessProfile.energySourcePattern.percentage}%)`)
+      console.log('Awareness Style:', result.consciousnessProfile.awarenessStyle.arabicDomainName,
+                  `(${result.consciousnessProfile.awarenessStyle.percentage}%)`)
+      console.log('Decision Center:', result.consciousnessProfile.decisionMakingCenter.arabicDomainName,
+                  `(${result.consciousnessProfile.decisionMakingCenter.percentage}%)`)
+      console.log('Life Structure:', result.consciousnessProfile.lifeStructurePreference.arabicDomainName,
+                  `(${result.consciousnessProfile.lifeStructurePreference.percentage}%)`)
+    }
   }
 }

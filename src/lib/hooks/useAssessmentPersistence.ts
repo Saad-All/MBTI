@@ -3,6 +3,8 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { useAssessmentStore } from '@/lib/stores/assessment-store'
 import { storageService } from '@/lib/services/StorageService'
+import { SessionService } from '@/lib/services/SessionService'
+import { optimizedStorage } from '@/lib/services/OptimizedStorageService'
 
 export interface PersistenceState {
   isRestoring: boolean
@@ -52,12 +54,27 @@ export function useAssessmentPersistence() {
     checkHealth()
   }, [])
 
-  // Auto-persist state changes with debouncing
+  // Auto-persist state changes with debouncing and enhanced metadata
   const persistState = useCallback(() => {
     if (isRestoringRef.current || !assessmentState.sessionId) return
     
     try {
-      assessmentState.persistState()
+      // Add timestamp to persisted data
+      const enhancedPersist = () => {
+        assessmentState.persistState()
+        
+        // Store additional metadata for recovery
+        const metadata = {
+          lastModified: new Date().toISOString(),
+          sessionPhase: SessionService.getCurrentPhase(),
+          currentQuestionIndex: assessmentState.formatProgress?.currentQuestionIndex || 0,
+          totalQuestionsCompleted: assessmentState.coreResponses.length + assessmentState.extendedResponses.length
+        }
+        
+        storageService.setItem(`${assessmentState.sessionId}-metadata`, metadata)
+      }
+      
+      enhancedPersist()
       lastSaveRef.current = new Date()
       setPersistenceState(prev => ({
         ...prev,
@@ -73,13 +90,16 @@ export function useAssessmentPersistence() {
     }
   }, [assessmentState])
 
-  // Debounced auto-save effect
+  // Debounced auto-save effect with SAIS optimization
   useEffect(() => {
     if (isRestoringRef.current) return
     
+    // Use shorter debounce for SAIS format due to rapid point allocation changes
+    const debounceTime = assessmentState.selectedFormat === 'sais' ? 500 : 1000
+    
     const timeoutId = setTimeout(() => {
       persistState()
-    }, 1000) // 1 second debounce
+    }, debounceTime)
 
     return () => clearTimeout(timeoutId)
   }, [
@@ -97,11 +117,16 @@ export function useAssessmentPersistence() {
     persistState
   ])
 
-  // Recovery helper function
+  // Enhanced recovery helper with exact position support
   const attemptRecovery = useCallback((sessionId?: string): {
     success: boolean
     hasSession: boolean
     isExpired: boolean
+    exactPosition?: {
+      step: string
+      questionIndex: number
+      totalCompleted: number
+    }
     error?: string
   } => {
     try {
@@ -113,10 +138,36 @@ export function useAssessmentPersistence() {
       const result = storageService.getItem(recoverySessionId)
       
       if (result.success && result.data) {
+        // Check if session is expired
+        const sessionData = SessionService.getSessionData()
+        const isExpired = sessionData ? SessionService.isSessionExpired(sessionData) : false
+        
+        if (isExpired) {
+          return {
+            success: false,
+            hasSession: true,
+            isExpired: true
+          }
+        }
+        
         // Restore the session
         const restored = assessmentState.restoreFromSession(recoverySessionId)
         
         if (restored) {
+          // Validate session state consistency
+          const isValid = SessionService.validateSessionState(assessmentState)
+          
+          if (!isValid) {
+            console.warn('Session state validation failed, but continuing with recovery')
+          }
+          
+          // Get exact position for seamless continuation
+          const exactPosition = {
+            step: assessmentState.currentStep,
+            questionIndex: assessmentState.formatProgress?.currentQuestionIndex || 0,
+            totalCompleted: assessmentState.coreResponses.length + assessmentState.extendedResponses.length
+          }
+          
           setPersistenceState(prev => ({
             ...prev,
             hasRestoredSession: true,
@@ -126,7 +177,8 @@ export function useAssessmentPersistence() {
           return {
             success: true,
             hasSession: true,
-            isExpired: false
+            isExpired: false,
+            exactPosition
           }
         }
       }
@@ -181,12 +233,15 @@ export function useAssessmentPersistence() {
     return attemptRecovery(sessionId)
   }, [attemptRecovery])
 
-  // Clear session function
+  // Clear session function with metadata cleanup
   const clearSession = useCallback((sessionId?: string) => {
     const idToRemove = sessionId || assessmentState.sessionId
     if (idToRemove) {
       try {
         storageService.removeItem(idToRemove)
+        storageService.removeItem(`${idToRemove}-metadata`)
+        SessionService.clearSessionData()
+        
         setPersistenceState(prev => ({
           ...prev,
           hasRestoredSession: false,
@@ -282,6 +337,12 @@ export function useSessionRecovery() {
     isExpired: boolean
     progress: number
     lastSaved?: Date
+    sessionPhase?: 'core' | 'extended'
+    exactPosition?: {
+      step: string
+      questionIndex: number
+      totalCompleted: number
+    }
   } => {
     try {
       const result = storageService.getItem(sessionId)
@@ -289,11 +350,25 @@ export function useSessionRecovery() {
         return { isValid: false, isExpired: false, progress: 0 }
       }
       
+      // Check with SessionService
+      const sessionData = SessionService.getSessionData()
+      const isExpired = sessionData ? SessionService.isSessionExpired(sessionData) : false
+      
+      // Get metadata if available
+      const metadataResult = storageService.getItem(`${sessionId}-metadata`)
+      const metadata = metadataResult.success ? metadataResult.data : null
+      
       return {
         isValid: true,
-        isExpired: false, // No expiration for simplified version
+        isExpired,
         progress: result.data.progress || 0,
-        lastSaved: result.data.timestamp ? new Date(result.data.timestamp) : undefined
+        lastSaved: metadata?.lastModified ? new Date(metadata.lastModified) : undefined,
+        sessionPhase: sessionData?.phase,
+        exactPosition: result.data.formatProgress ? {
+          step: result.data.currentStep,
+          questionIndex: result.data.formatProgress.currentQuestionIndex,
+          totalCompleted: result.data.coreResponses?.length + result.data.extendedResponses?.length || 0
+        } : undefined
       }
     } catch (error) {
       console.error('Session validation failed:', error)

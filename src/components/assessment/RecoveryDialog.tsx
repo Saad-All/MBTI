@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { storageService } from '@/lib/services/StorageService'
 import { useAssessmentStore } from '@/lib/stores/assessment-store'
+import { SessionService } from '@/lib/services/SessionService'
+import { QUESTION_POOLS } from '@/lib/constants/assessment'
 
 interface RecoveryDialogProps {
   sessionId: string | null
@@ -19,6 +21,13 @@ interface SessionRecoveryData {
   lastSaved: Date | null
   isExpired: boolean
   layer?: string
+  sessionPhase?: 'core' | 'extended'
+  exactPosition?: {
+    step: string
+    questionIndex: number
+    formatPool: string
+    totalCompleted: number
+  }
 }
 
 export function RecoveryDialog({ 
@@ -43,11 +52,20 @@ export function RecoveryDialog({
       const result = storageService.getItem(sessionId)
       
       if (result.success && result.data) {
+        // Check session validity with SessionService
+        const sessionInfo = SessionService.getSessionData()
+        const isExpired = sessionInfo ? SessionService.isSessionExpired(sessionInfo) : false
+        
+        // Determine exact position for recovery
+        const exactPosition = getExactPosition(result.data)
+        
         setRecoveryData({
           sessionData: result.data,
-          lastSaved: new Date(),
-          isExpired: false,
-          layer: result.layer || 'localStorage'
+          lastSaved: result.data.lastModified ? new Date(result.data.lastModified) : new Date(),
+          isExpired,
+          layer: result.layer || 'localStorage',
+          sessionPhase: sessionInfo?.phase || 'core',
+          exactPosition
         })
       } else {
         // No session found
@@ -60,6 +78,45 @@ export function RecoveryDialog({
     } finally {
       setIsLoading(false)
     }
+  }
+  
+  const getExactPosition = (sessionData: any) => {
+    if (!sessionData) return undefined
+    
+    const { currentStep, selectedFormat, formatProgress, coreResponses = [], extendedResponses = [] } = sessionData
+    
+    // Calculate exact position based on assessment state
+    if (currentStep === 'core-questions') {
+      return {
+        step: 'Core Assessment',
+        questionIndex: coreResponses.length,
+        formatPool: QUESTION_POOLS.core,
+        totalCompleted: coreResponses.length
+      }
+    } else if (currentStep === 'questions' && selectedFormat && formatProgress) {
+      return {
+        step: 'Extended Assessment',
+        questionIndex: formatProgress.currentQuestionIndex || extendedResponses.length,
+        formatPool: formatProgress.questionPool || QUESTION_POOLS[selectedFormat as keyof typeof QUESTION_POOLS],
+        totalCompleted: coreResponses.length + extendedResponses.length
+      }
+    } else if (currentStep === 'interim-results') {
+      return {
+        step: 'Interim Results',
+        questionIndex: 4,
+        formatPool: QUESTION_POOLS.core,
+        totalCompleted: 4
+      }
+    } else if (currentStep === 'format-selection') {
+      return {
+        step: 'Format Selection',
+        questionIndex: 0,
+        formatPool: '',
+        totalCompleted: 4
+      }
+    }
+    
+    return undefined
   }
 
   useEffect(() => {
@@ -233,6 +290,49 @@ export function RecoveryDialog({
               <span className="capitalize">{recoveryData.sessionData.selectedFormat}</span>
             </div>
           )}
+          
+          {recoveryData.exactPosition && (
+            <>
+              <div className="border-t pt-3 mt-3">
+                <div className="flex items-center justify-between text-sm text-gray-600">
+                  <span>{t('recovery.currentStep')}:</span>
+                  <span className="font-medium">{recoveryData.exactPosition.step}</span>
+                </div>
+                
+                {recoveryData.exactPosition.questionIndex > 0 && (
+                  <div className="flex items-center justify-between text-sm text-gray-600 mt-2">
+                    <span>{t('recovery.questionNumber')}:</span>
+                    <span className="font-medium">
+                      {recoveryData.exactPosition.questionIndex + 1}
+                      {recoveryData.exactPosition.formatPool && (
+                        <span className="text-xs text-gray-500 ml-1">
+                          ({recoveryData.exactPosition.formatPool})
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between text-sm text-gray-600 mt-2">
+                  <span>{t('recovery.questionsCompleted')}:</span>
+                  <span className="font-medium">{recoveryData.exactPosition.totalCompleted}</span>
+                </div>
+              </div>
+              
+              {recoveryData.sessionPhase === 'extended' && (
+                <div className="bg-blue-50 p-3 rounded-lg mt-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-blue-600">⏱️</span>
+                    <p className="text-sm text-blue-800">
+                      {t('recovery.extendedSession', { 
+                        timeRemaining: SessionService.getSessionSummary().timeRemaining 
+                      })}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         <div className="flex flex-col gap-3">
@@ -265,7 +365,10 @@ export function RecoveryDialog({
         </div>
 
         <div className="mt-4 text-xs text-gray-500 text-center">
-          {t('recovery.note')}
+          {recoveryData.exactPosition?.step === 'Extended Assessment' 
+            ? t('recovery.extendedNote')
+            : t('recovery.note')
+          }
         </div>
       </div>
     </div>

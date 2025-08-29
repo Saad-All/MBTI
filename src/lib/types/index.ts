@@ -121,6 +121,10 @@ export interface DimensionScore {
   rawScoreB: number // I, N, F, P
   preference: string // The winning preference
   confidence: number // Confidence percentage
+  // SAIS Consciousness Enhancements
+  consciousnessPercentage?: number // For SAIS: preference strength as percentage (e.g., 12/15 = 80%)
+  consciousnessDomain?: string // Arabic consciousness domain name
+  totalPossiblePoints?: number // For SAIS: 15 points per dimension (3 questions × 5 points)
 }
 
 export interface ScoringResult {
@@ -131,6 +135,24 @@ export interface ScoringResult {
   methodology: MethodologyType
   isInterim: boolean
   totalResponses: number
+  // SAIS Consciousness Enhancements
+  consciousnessProfile?: ConsciousnessProfile
+}
+
+// SAIS Consciousness Framework
+export interface ConsciousnessProfile {
+  energySourcePattern: ConsciousnessDimension // E/I
+  awarenessStyle: ConsciousnessDimension // S/N
+  decisionMakingCenter: ConsciousnessDimension // T/F
+  lifeStructurePreference: ConsciousnessDimension // J/P
+}
+
+export interface ConsciousnessDimension {
+  dimension: MBTIDimension
+  preference: string
+  percentage: number
+  arabicDomainName: string
+  consciousnessDescription: string
 }
 
 export interface CalculationOptions {

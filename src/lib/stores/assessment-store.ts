@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { QuestionResponse } from '@/lib/types'
 import { storageService } from '@/lib/services/StorageService'
+import { SessionService } from '@/lib/services/SessionService'
+import { CORE_QUESTIONS_COUNT, FORMAT_QUESTIONS, TOTAL_QUESTIONS, QUESTION_POOLS, PROGRESS_MILESTONES } from '@/lib/constants/assessment'
 
 export type AssessmentStep = 'welcome' | 'core-questions' | 'interim-results' | 'format-selection' | 'questions' | 'results' | 'coaching'
 
@@ -24,6 +26,13 @@ export interface AssessmentState {
     confidence: number
     insights: string[]
     disclaimer: string
+  }
+  // Format-specific tracking
+  formatProgress?: {
+    totalQuestions: number
+    currentQuestionIndex: number
+    completedQuestions: number
+    questionPool: string
   }
 }
 
@@ -49,6 +58,8 @@ export interface AppStore {
   setSelectedFormat: (format: 'scenarios' | 'traits' | 'sais') => void
   updateProgress: (progress: number) => void
   setProgress: (progress: number) => void
+  calculateFormatSpecificProgress: () => number
+  updateFormatProgress: (currentIndex: number) => void
   completeAssessment: () => void
   resetAssessment: () => void
   setInterimResults: (results: AssessmentState['interimResults']) => void
@@ -92,10 +103,14 @@ export const useAppStore = create<AppStore>()(
         ui: initialUIState,
         
         // Assessment actions
-        setSessionId: (sessionId) =>
+        setSessionId: (sessionId) => {
+          // Initialize session with SessionService
+          SessionService.initializeSession(sessionId, 'core');
+          
           set((state) => ({
             assessment: { ...state.assessment, sessionId }
-          })),
+          }));
+        },
           
         setCurrentStep: (currentStep) =>
           set((state) => ({
@@ -188,10 +203,31 @@ export const useAppStore = create<AppStore>()(
             assessment: { ...state.assessment, extendedResponses }
           })),
           
-        setSelectedFormat: (selectedFormat) =>
+        setSelectedFormat: (selectedFormat) => {
+          const state = get();
+          
+          // Transition to extended phase when format is selected
+          if (state.assessment.sessionId) {
+            SessionService.transitionToExtendedPhase(state.assessment.sessionId);
+          }
+          
+          // Initialize format-specific progress tracking
+          const formatProgress = {
+            totalQuestions: TOTAL_QUESTIONS[selectedFormat],
+            currentQuestionIndex: 0,
+            completedQuestions: CORE_QUESTIONS_COUNT, // Core questions already completed
+            questionPool: QUESTION_POOLS[selectedFormat]
+          };
+          
           set((state) => ({
-            assessment: { ...state.assessment, selectedFormat }
-          })),
+            assessment: { 
+              ...state.assessment, 
+              selectedFormat,
+              formatProgress,
+              progress: PROGRESS_MILESTONES.formatSelected // Set to 40% after format selection
+            }
+          }));
+        },
           
         updateProgress: (progress) =>
           set((state) => ({
@@ -202,6 +238,47 @@ export const useAppStore = create<AppStore>()(
           set((state) => ({
             assessment: { ...state.assessment, progress }
           })),
+          
+        calculateFormatSpecificProgress: () => {
+          const state = get();
+          const { selectedFormat, formatProgress, coreResponses, extendedResponses } = state.assessment;
+          
+          if (!selectedFormat || !formatProgress) {
+            // Core assessment progress only
+            return (coreResponses.length / CORE_QUESTIONS_COUNT) * PROGRESS_MILESTONES.coreComplete;
+          }
+          
+          // Calculate total completed questions (core + extended)
+          const totalCompleted = coreResponses.length + extendedResponses.length;
+          const totalQuestions = formatProgress.totalQuestions;
+          
+          // Calculate percentage (0-100)
+          return Math.min(100, Math.round((totalCompleted / totalQuestions) * 100));
+        },
+        
+        updateFormatProgress: (currentIndex) => {
+          const state = get();
+          const { formatProgress } = state.assessment;
+          
+          if (!formatProgress) return;
+          
+          const updatedFormatProgress = {
+            ...formatProgress,
+            currentQuestionIndex: currentIndex,
+            completedQuestions: CORE_QUESTIONS_COUNT + currentIndex
+          };
+          
+          // Calculate and update progress automatically
+          const newProgress = get().calculateFormatSpecificProgress();
+          
+          set((state) => ({
+            assessment: {
+              ...state.assessment,
+              formatProgress: updatedFormatProgress,
+              progress: newProgress
+            }
+          }));
+        },
           
         completeAssessment: () =>
           set((state) => ({
@@ -252,8 +329,12 @@ export const useAppStore = create<AppStore>()(
             calculatedType: state.assessment.calculatedType,
             confidence: state.assessment.confidence,
             progress: state.assessment.progress,
-            isComplete: state.assessment.isComplete
+            isComplete: state.assessment.isComplete,
+            formatProgress: state.assessment.formatProgress
           }
+          
+          // Update session activity when persisting state
+          SessionService.updateActivity();
           
           storageService.setItem(state.assessment.sessionId, sessionData)
         },
@@ -280,7 +361,8 @@ export const useAppStore = create<AppStore>()(
                   calculatedType: sessionData.calculatedType,
                   confidence: sessionData.confidence,
                   progress: sessionData.progress,
-                  isComplete: sessionData.isComplete
+                  isComplete: sessionData.isComplete,
+                  formatProgress: sessionData.formatProgress
                 },
                 ui: {
                   ...state.ui,
@@ -339,6 +421,7 @@ export const useAssessmentStore = () => useAppStore((state) => ({
   calculatedType: state.assessment.calculatedType,
   confidence: state.assessment.confidence,
   interimResults: state.assessment.interimResults,
+  formatProgress: state.assessment.formatProgress,
   setSessionId: state.setSessionId,
   setCurrentStep: state.setCurrentStep,
   setLanguage: state.setLanguage,
@@ -349,6 +432,8 @@ export const useAssessmentStore = () => useAppStore((state) => ({
   setSelectedFormat: state.setSelectedFormat,
   updateProgress: state.updateProgress,
   setProgress: state.setProgress,
+  calculateFormatSpecificProgress: state.calculateFormatSpecificProgress,
+  updateFormatProgress: state.updateFormatProgress,
   completeAssessment: state.completeAssessment,
   resetAssessment: state.resetAssessment,
   setInterimResults: state.setInterimResults,

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
+}) : null
 
 const ARABIC_SYSTEM_PROMPT = `أنت مدرب شخصي متخصص في تحليل الشخصية باستخدام مؤشر مايرز-بريجز (MBTI). مهمتك هي تقديم نصائح شخصية ومفيدة باللغة العربية.
 
@@ -20,6 +20,29 @@ const ARABIC_SYSTEM_PROMPT = `أنت مدرب شخصي متخصص في تحلي�
 - قدم نصائح للعلاقات والمهنة والنمو الشخصي
 - تجنب الأحكام أو التعميمات المطلقة
 - شجع على الاستكشاف والتطوير المستمر`
+
+const SAIS_CONSCIOUSNESS_ARABIC_PROMPT = `أنت مرشد روحي ونفسي متخصص في تطوير الوعي والنمو الداخلي، تستخدم منهجية SAIS للإرشاد النفسي العميق.
+
+السياق المتخصص للوعي:
+- المستخدم أكمل تقييم الشخصية باستخدام منهجية SAIS (الوعي والإدراك العميق)
+- منهجية SAIS تركز على أربعة أبعاد للوعي: مصدر الحيوية، البصيرة الداخلية، بوصلة القيم، والتنظيم الواعي
+- هدفك مساعدة المستخدم على فهم أنماط وعيه وتطوير إمكانياته الروحية والنفسية العميقة
+
+مصطلحات الوعي والإرشاد النفسي:
+- المركز الجذري العميق: مصدر الطاقة الداخلية والاتصال بالذات
+- العين الثالثة: البصيرة والإدراك الحدسي والرؤية الروحية
+- بوصلة القيم الداخلية: التوجيه القلبي للقرارات والانسجام مع الذات
+- التناغم الكوني: الانسجام مع الذات والآخرين والطبيعة
+- مسار التطوير الروحي: رحلة النمو النفسي والوعي المتزايد
+
+أساليب الإرشاد النفسي المتخصصة:
+- استخدم لغة الوعي والروحانية المتوازنة والمتجذرة في الثقافة العربية
+- ركز على التطوير الداخلي والنمو النفسي والروحي
+- قدم ممارسات تأملية وتطويرية محددة ومناسبة ثقافياً
+- اربط نمط الشخصية بمسار التطوير الروحي ونمو الوعي
+- استخدم أسلوب التأمل والاستكشاف الداخلي في طرح الأسئلة
+- شجع على ممارسات التأمل والذكر والتفكر والمراقبة الذاتية
+- ربط التطوير الشخصي بالقيم الروحية والأخلاقية`
 
 const ENGLISH_SYSTEM_PROMPT = `You are a professional MBTI personality coach specializing in Myers-Briggs Type Indicator analysis. Your role is to provide personalized, actionable coaching advice.
 
@@ -39,7 +62,14 @@ Conversation guidelines:
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { message, mbtiType, language = 'en', conversationHistory = [] } = body
+    const { 
+      message, 
+      mbtiType, 
+      language = 'en', 
+      conversationHistory = [],
+      methodology,
+      consciousnessProfile 
+    } = body
 
     if (!message) {
       return NextResponse.json(
@@ -48,21 +78,43 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENAI_API_KEY || !openai) {
       return NextResponse.json(
         { error: 'OpenAI API key not configured' },
         { status: 500 }
       )
     }
 
-    // Select system prompt based on language
-    const systemPrompt = language === 'ar' ? ARABIC_SYSTEM_PROMPT : ENGLISH_SYSTEM_PROMPT
+    // Select system prompt based on language and methodology
+    let systemPrompt: string
+    if (methodology === 'sais' && language === 'ar') {
+      systemPrompt = SAIS_CONSCIOUSNESS_ARABIC_PROMPT
+    } else {
+      systemPrompt = language === 'ar' ? ARABIC_SYSTEM_PROMPT : ENGLISH_SYSTEM_PROMPT
+    }
 
-    // Build conversation messages
+    // Build conversation messages with consciousness context
+    let contextMessage = systemPrompt
+    
+    if (mbtiType) {
+      contextMessage += `\n\nنوع شخصية المستخدم: ${mbtiType}`
+    }
+    
+    // Add consciousness context for SAIS users
+    if (methodology === 'sais' && consciousnessProfile) {
+      contextMessage += `\n\nملف الوعي الخاص بالمستخدم:
+- نمط الطاقة: ${consciousnessProfile.energySourcePattern?.arabicDomainName} (${consciousnessProfile.energySourcePattern?.percentage}%)
+- أسلوب الإدراك: ${consciousnessProfile.awarenessStyle?.arabicDomainName} (${consciousnessProfile.awarenessStyle?.percentage}%)  
+- مركز القرار: ${consciousnessProfile.decisionMakingCenter?.arabicDomainName} (${consciousnessProfile.decisionMakingCenter?.percentage}%)
+- تنظيم الحياة: ${consciousnessProfile.lifeStructurePreference?.arabicDomainName} (${consciousnessProfile.lifeStructurePreference?.percentage}%)
+
+استخدم هذا الملف لتقديم إرشادات مخصصة لتطوير وعي المستخدم ونموه النفسي.`
+    }
+
     const messages: any[] = [
       {
         role: 'system',
-        content: systemPrompt + (mbtiType ? `\n\nنوع شخصية المستخدم: ${mbtiType}` : ''),
+        content: contextMessage,
       },
     ]
 
