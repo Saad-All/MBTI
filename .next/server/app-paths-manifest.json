@@ -1,6 +1,7 @@
 {
   "/api/assessment/calculate-interim/route": "app/api/assessment/calculate-interim/route.js",
   "/api/assessment/calculate/route": "app/api/assessment/calculate/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/[locale]/page": "app/[locale]/page.js",
   "/[locale]/assessment/core/page": "app/[locale]/assessment/core/page.js",
   "/[locale]/assessment/interim/page": "app/[locale]/assessment/interim/page.js",
