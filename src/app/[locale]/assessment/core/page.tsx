@@ -9,6 +9,9 @@ import { QuestionCard } from "@/components/assessment/QuestionCard";
 import { BinaryChoice } from "@/components/assessment/BinaryChoice";
 import { ProgressBar } from "@/components/assessment/ProgressBar";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import { Button } from "@/components/ui/Button";
+import { Small } from "@/components/ui/Typography";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { coreQuestions } from "@/data/core-questions";
 import { QuestionResponse } from "@/lib/types";
 
@@ -124,15 +127,15 @@ export default function CoreAssessment({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <PageLayout containerSize="md" className="bg-gradient-primary">
       {/* Header */}
-      <header className="absolute top-0 right-0 p-6">
-        <LanguageToggle />
+      <header className="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-4 sm:p-6">
+        <LanguageToggle variant="compact" />
       </header>
 
-      <div className="container mx-auto px-4 py-8 md:py-16 max-w-3xl safe-bottom">
+      <div className="pt-16 pb-8 md:pt-20 md:pb-16">
         {/* Progress */}
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <ProgressBar
             current={currentQuestionIndex + 1}
             total={coreQuestions.length}
@@ -145,57 +148,48 @@ export default function CoreAssessment({
         </div>
 
         {/* Question */}
-        <QuestionCard question={t(currentQuestion.questionKey)}>
-          <BinaryChoice
-            optionA={t(currentQuestion.optionAKey)}
-            optionB={t(currentQuestion.optionBKey)}
-            selectedOption={selectedOption}
-            onSelect={handleOptionSelect}
-          />
-        </QuestionCard>
+        <div className="animate-fade-in animation-delay-100">
+          <QuestionCard question={t(currentQuestion.questionKey)}>
+            <BinaryChoice
+              optionA={t(currentQuestion.optionAKey)}
+              optionB={t(currentQuestion.optionBKey)}
+              selectedOption={selectedOption}
+              onSelect={handleOptionSelect}
+            />
+          </QuestionCard>
+        </div>
 
         {/* Navigation */}
-        <div className="mt-8 flex justify-between gap-4">
-          <button
+        <div className="mt-8 flex flex-col sm:flex-row justify-between gap-4 animate-fade-in animation-delay-200">
+          <Button
             onClick={handleBack}
             disabled={currentQuestionIndex === 0}
-            className={`
-              px-4 md:px-6 py-3 rounded-lg font-medium transition-all
-              touch-target no-select flex-1 md:flex-initial
-              ${
-                currentQuestionIndex === 0
-                  ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 active:scale-[0.98]"
-              }
-            `}
+            variant="secondary"
+            size="lg"
+            className="w-full sm:w-auto"
           >
             {t("assessment.core.back")}
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleNext}
             disabled={!selectedOption}
-            className={`
-              px-4 md:px-6 py-3 rounded-lg font-medium transition-all
-              touch-target no-select flex-1 md:flex-initial
-              ${
-                selectedOption
-                  ? "bg-indigo-600 text-white hover:bg-indigo-700 active:scale-[0.98]"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-              }
-            `}
+            size="lg"
+            className="w-full sm:w-auto"
           >
             {t("assessment.core.next")}
-          </button>
+          </Button>
         </div>
 
         {/* Validation message */}
         {!selectedOption && (
-          <p className="text-center mt-4 text-sm text-gray-500 dark:text-gray-400">
+          <Small 
+            className="text-center mt-4 text-content-tertiary animate-fade-in animation-delay-300 block"
+          >
             {t("assessment.core.selectOption")}
-          </p>
+          </Small>
         )}
       </div>
-    </main>
+    </PageLayout>
   );
 }

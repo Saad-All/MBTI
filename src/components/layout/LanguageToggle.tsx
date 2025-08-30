@@ -5,8 +5,14 @@ import { useAssessmentStore } from '@/lib/stores/assessment-store'
 import { Language } from '@/lib/types'
 import { getButtonRTLClasses } from '@/lib/utils/rtl-helpers'
 import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/Button'
 
-export function LanguageToggle() {
+interface LanguageToggleProps {
+  variant?: 'default' | 'compact'
+  className?: string
+}
+
+export function LanguageToggle({ variant = 'default', className = '' }: LanguageToggleProps) {
   const router = useRouter()
   const pathname = usePathname()
   const { language, setLanguage } = useAssessmentStore()
@@ -46,23 +52,51 @@ export function LanguageToggle() {
 
   const buttonClasses = getButtonRTLClasses(language, true)
 
+  if (variant === 'compact') {
+    return (
+      <button
+        onClick={toggleLanguage}
+        disabled={isLoading}
+        className={`
+          ${buttonClasses}
+          ${className}
+          inline-flex items-center justify-center
+          w-10 h-10 rounded-lg
+          bg-surface-secondary hover:bg-surface-tertiary
+          border border-border-primary hover:border-border-secondary
+          text-content-primary
+          transition-all duration-200 ease-out
+          disabled:opacity-50 disabled:cursor-not-allowed
+          focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+          dark:focus:ring-offset-surface-primary
+        `}
+        aria-label={language === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+      >
+        {isLoading ? (
+          <div className="w-4 h-4 animate-spin rounded-full border-2 border-border-primary border-t-primary" />
+        ) : (
+          <span className="text-sm font-semibold">
+            {language === 'en' ? 'ع' : 'EN'}
+          </span>
+        )}
+      </button>
+    )
+  }
+
   return (
-    <button
+    <Button
       onClick={toggleLanguage}
       disabled={isLoading}
-      className={`
-        ${buttonClasses}
-        flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 
-        hover:border-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
-        ${language === 'ar' ? 'font-arabic' : 'font-sans'}
-      `}
+      variant="secondary"
+      size="sm"
+      className={`${buttonClasses} ${className}`}
       aria-label={language === 'en' ? 'Switch to Arabic' : 'Switch to English'}
     >
       {isLoading ? (
-        <div className="w-4 h-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600" />
+        <div className="w-4 h-4 animate-spin rounded-full border-2 border-surface-secondary border-t-white" />
       ) : (
         <svg
-          className={`w-4 h-4 ${language === 'ar' ? 'rtl-flip' : ''}`}
+          className={`w-4 h-4 ${language === 'ar' ? 'rtl:scale-x-[-1]' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -75,9 +109,9 @@ export function LanguageToggle() {
           />
         </svg>
       )}
-      <span className="text-sm font-medium">
+      <span className={`text-sm font-medium ${language === 'ar' ? 'font-arabic' : ''}`}>
         {language === 'en' ? 'العربية' : 'English'}
       </span>
-    </button>
+    </Button>
   )
 }

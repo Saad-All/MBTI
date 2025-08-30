@@ -1,6 +1,7 @@
 'use client'
 
 import { useAssessmentStore } from '@/lib/stores/assessment-store'
+import { Label, Text } from '@/components/ui/Typography'
 
 interface BinaryChoiceProps {
   optionA: string
@@ -27,32 +28,36 @@ export function BinaryChoice({
         onClick={() => onSelect('A')}
         disabled={disabled}
         className={`
-          w-full p-4 md:p-6 text-left rounded-xl border-2 transition-all
+          w-full p-4 md:p-6 rounded-xl border-2 transition-all duration-200
           touch-target no-select
-          ${isRTL ? 'text-right' : 'text-left'}
+          text-left rtl:text-right
           ${
             selectedOption === 'A'
-              ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-              : 'border-gray-200 hover:border-gray-300 dark:border-gray-700 hover:dark:border-gray-600'
+              ? 'border-primary bg-primary/10 dark:bg-primary/20'
+              : 'border-border-primary hover:border-border-secondary bg-surface-secondary hover:bg-surface-tertiary'
           }
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           active:scale-[0.98] active:transition-transform
+          focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+          dark:focus:ring-offset-surface-primary
         `}
+        aria-pressed={selectedOption === 'A'}
       >
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-4 rtl:flex-row-reverse">
           <div
             className={`
               flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center
+              transition-all duration-200
               ${
                 selectedOption === 'A'
-                  ? 'border-indigo-500 bg-indigo-500'
-                  : 'border-gray-300 dark:border-gray-600'
+                  ? 'border-primary bg-primary'
+                  : 'border-border-secondary bg-surface-primary'
               }
             `}
           >
             {selectedOption === 'A' && (
               <svg
-                className="w-4 h-4 text-white"
+                className="w-4 h-4 text-white animate-scale-in"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -65,10 +70,10 @@ export function BinaryChoice({
             )}
           </div>
           <div className="flex-1">
-            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            <Label className="text-content-tertiary">
               {isRTL ? 'أ' : 'A'}
-            </span>
-            <p className="mt-1 text-gray-700 dark:text-gray-300">{optionA}</p>
+            </Label>
+            <Text className="mt-1 text-content-primary">{optionA}</Text>
           </div>
         </div>
       </button>
@@ -78,32 +83,36 @@ export function BinaryChoice({
         onClick={() => onSelect('B')}
         disabled={disabled}
         className={`
-          w-full p-4 md:p-6 text-left rounded-xl border-2 transition-all
+          w-full p-4 md:p-6 rounded-xl border-2 transition-all duration-200
           touch-target no-select
-          ${isRTL ? 'text-right' : 'text-left'}
+          text-left rtl:text-right
           ${
             selectedOption === 'B'
-              ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-              : 'border-gray-200 hover:border-gray-300 dark:border-gray-700 hover:dark:border-gray-600'
+              ? 'border-primary bg-primary/10 dark:bg-primary/20'
+              : 'border-border-primary hover:border-border-secondary bg-surface-secondary hover:bg-surface-tertiary'
           }
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           active:scale-[0.98] active:transition-transform
+          focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+          dark:focus:ring-offset-surface-primary
         `}
+        aria-pressed={selectedOption === 'B'}
       >
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-4 rtl:flex-row-reverse">
           <div
             className={`
               flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center
+              transition-all duration-200
               ${
                 selectedOption === 'B'
-                  ? 'border-indigo-500 bg-indigo-500'
-                  : 'border-gray-300 dark:border-gray-600'
+                  ? 'border-primary bg-primary'
+                  : 'border-border-secondary bg-surface-primary'
               }
             `}
           >
             {selectedOption === 'B' && (
               <svg
-                className="w-4 h-4 text-white"
+                className="w-4 h-4 text-white animate-scale-in"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -116,10 +125,10 @@ export function BinaryChoice({
             )}
           </div>
           <div className="flex-1">
-            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            <Label className="text-content-tertiary">
               {isRTL ? 'ب' : 'B'}
-            </span>
-            <p className="mt-1 text-gray-700 dark:text-gray-300">{optionB}</p>
+            </Label>
+            <Text className="mt-1 text-content-primary">{optionB}</Text>
           </div>
         </div>
       </button>

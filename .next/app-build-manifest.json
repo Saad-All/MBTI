@@ -41,15 +41,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/results/sais/page.js"
     ],
+    "/[locale]/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/chat/page.js"
+    ],
     "/[locale]/coaching/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/coaching/page.js"
     ],
-    "/[locale]/chat/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/chat/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

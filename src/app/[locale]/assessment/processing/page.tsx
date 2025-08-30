@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useAssessmentStore, useAppStore } from '@/lib/stores/assessment-store'
+import { PageLayout } from '@/components/layout/PageLayout'
+import { H2, Text } from '@/components/ui/Typography'
+import { Button } from '@/components/ui/Button'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 export default function ProcessingPage() {
   const router = useRouter()
@@ -92,60 +96,64 @@ export default function ProcessingPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
-      <div className="text-center p-8 max-w-md">
+    <PageLayout containerSize="sm" centered className="bg-gradient-primary">
+      <div className="text-center p-8 max-w-md animate-fade-in">
         {isCalculating && !error ? (
           <>
-            {/* Basic CSS spinner */}
+            {/* Loading spinner */}
             <div className="mb-8">
-              <div className="inline-block w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+              <LoadingSpinner size="xl" />
             </div>
             
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <H2 className="mb-4 text-content-primary">
               {t('assessment.processing.title', 'جاري حساب نمط شخصيتك...')}
-            </h2>
+            </H2>
             
-            <p className="text-gray-600">
+            <Text className="text-content-secondary">
               {t('assessment.processing.subtitle', 'Please wait while we analyze your responses')}
-            </p>
+            </Text>
           </>
         ) : error ? (
           <>
             {/* Error state */}
             <div className="mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-error/10 rounded-full">
+                <svg className="w-8 h-8 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
             </div>
             
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <H2 className="mb-4 text-content-primary">
               {t('assessment.processing.error.title', 'Something went wrong')}
-            </h2>
+            </H2>
             
-            <p className="text-gray-600 mb-6">
+            <Text className="text-content-secondary mb-6">
               {t('assessment.processing.error.message', 'We were unable to calculate your results. Please try again.')}
-            </p>
+            </Text>
             
             <div className="space-y-3">
-              <button
+              <Button
                 onClick={handleRetry}
-                className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                variant="primary"
+                size="lg"
+                fullWidth
               >
                 {t('assessment.processing.error.retry', 'Try Again')}
-              </button>
+              </Button>
               
-              <button
+              <Button
                 onClick={handleBackToAssessment}
-                className="w-full px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                variant="secondary"
+                size="lg"
+                fullWidth
               >
                 {t('assessment.processing.error.back', 'Back to Assessment')}
-              </button>
+              </Button>
             </div>
           </>
         ) : null}
       </div>
-    </div>
+    </PageLayout>
   )
 }

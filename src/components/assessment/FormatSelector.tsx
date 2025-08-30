@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Card } from '@/components/ui/Card'
+import { H3, Text } from '@/components/ui/Typography'
 
 export type FormatType = 'scenarios' | 'traits' | 'sais'
 
@@ -67,30 +69,28 @@ export const FormatSelector: React.FC<FormatSelectorProps> = ({
   return (
     <div className="grid md:grid-cols-3 gap-4">
       {formatOptions.map((format) => (
-        <div
+        <Card
           key={format.id}
           onClick={() => handleSelect(format.id)}
-          className={`
-            relative bg-white rounded-lg shadow-md p-6 cursor-pointer transition-all
-            ${selected === format.id ? 'ring-2 ring-blue-500 shadow-lg' : 'hover:shadow-lg'}
-          `}
+          variant={selected === format.id ? 'selected' : 'interactive'}
+          className="relative p-6 cursor-pointer transition-all duration-200 transform hover:scale-105"
         >
           {selected === format.id && (
-            <div className="absolute top-2 right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+            <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 w-6 h-6 bg-primary rounded-full flex items-center justify-center animate-scale-in">
               <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </div>
           )}
           
-          <div className="text-3xl mb-3">{format.icon}</div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="text-4xl mb-4 animate-bounce-subtle">{format.icon}</div>
+          <H3 className="mb-2 text-content-primary">
             {t(format.titleKey)}
-          </h3>
-          <p className="text-gray-600 text-sm">
+          </H3>
+          <Text variant="small" className="text-content-secondary">
             {t(format.descriptionKey)}
-          </p>
-        </div>
+          </Text>
+        </Card>
       ))}
     </div>
   )

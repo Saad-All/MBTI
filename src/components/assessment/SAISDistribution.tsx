@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react'
 import * as Slider from '@radix-ui/react-slider'
 import { useAssessmentStore } from '@/lib/stores/assessment-store'
 import { useTranslation } from 'react-i18next'
+import { Card } from '@/components/ui/Card'
+import { Text, Label } from '@/components/ui/Typography'
+import { triggerHapticFeedback } from '@/lib/utils/animations'
+import { clsx } from 'clsx'
 
 interface SAISDistributionProps {
   optionA: string
@@ -42,6 +46,11 @@ export function SAISDistribution({
     const newPointsA = value[0]
     const newPointsB = totalPoints - newPointsA
     
+    // Trigger haptic feedback on point changes
+    if (newPointsA !== pointsA) {
+      triggerHapticFeedback('light')
+    }
+    
     setPointsA(newPointsA)
     setPointsB(newPointsB)
     
@@ -51,6 +60,9 @@ export function SAISDistribution({
   const handlePointButtonClick = (pointsForA: number) => {
     const newPointsA = pointsForA
     const newPointsB = totalPoints - pointsForA
+    
+    // Trigger haptic feedback for button clicks
+    triggerHapticFeedback('medium')
     
     setPointsA(newPointsA)
     setPointsB(newPointsB)
@@ -70,32 +82,30 @@ export function SAISDistribution({
   return (
     <div className="space-y-6">
       {/* Option A */}
-      <div 
-        className={`
-          p-4 rounded-lg border-2 transition-all
-          ${pointsA > pointsB 
-            ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20' 
-            : 'border-gray-200 dark:border-gray-700'
-          }
-        `}
+      <Card 
+        variant={pointsA > pointsB ? 'selected' : 'default'}
+        className="p-4 transition-all duration-200"
       >
-        <div className="flex items-start gap-3 mb-2">
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <div className="flex items-start gap-3 mb-2 rtl:flex-row-reverse">
+          <Label className="text-content-tertiary">
             {isRTL ? 'أ' : 'A'}
-          </span>
-          <p className={`flex-1 text-gray-700 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+          </Label>
+          <Text className="flex-1 text-content-primary">
             {optionA}
-          </p>
+          </Text>
         </div>
-        <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        <div className="flex items-center gap-2 rtl:flex-row-reverse">
+          <span className={clsx(
+            "text-2xl font-bold text-primary transition-all duration-150",
+            "data-[changing=true]:animate-point-allocate"
+          )}>
             {pointsA}
           </span>
-          <span className="text-sm text-gray-500">
+          <Text variant="small" className="text-content-tertiary">
             {t('assessment.sais.points', { defaultValue: 'points' })}
-          </span>
+          </Text>
         </div>
-      </div>
+      </Card>
       
       {/* Slider */}
       <div className="px-2 py-4">
@@ -108,30 +118,32 @@ export function SAISDistribution({
           disabled={disabled}
           dir={isRTL ? 'rtl' : 'ltr'}
         >
-          <Slider.Track className="bg-gray-200 dark:bg-gray-700 relative grow rounded-full h-2">
-            <Slider.Range className="absolute bg-indigo-500 rounded-full h-full" />
+          <Slider.Track className="bg-surface-tertiary dark:bg-surface-secondary relative grow rounded-full h-2">
+            <Slider.Range className="absolute bg-accent rounded-full h-full transition-all duration-150" />
           </Slider.Track>
           <Slider.Thumb 
-            className="block w-5 h-5 bg-white dark:bg-gray-800 border-2 border-indigo-500 rounded-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-grab active:cursor-grabbing"
+            className="block w-5 h-5 bg-white dark:bg-surface-primary border-2 border-accent rounded-full hover:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-surface-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-grab active:cursor-grabbing transition-all duration-150 active:scale-110"
           />
         </Slider.Root>
         
         {/* Quick selection buttons */}
-        <div className={`flex justify-between mt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className="flex justify-between mt-4 rtl:flex-row-reverse">
           {distributionOptions.map((option) => (
             <button
               key={option.a}
               onClick={() => handlePointButtonClick(option.a)}
               disabled={disabled}
               className={`
-                px-2 py-1 text-xs rounded-md transition-all
+                px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150
                 ${pointsA === option.a && pointsB === option.b
-                  ? 'bg-indigo-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-accent text-white shadow-lg'
+                  : 'bg-surface-secondary hover:bg-surface-tertiary text-content-secondary hover:text-content-primary'
                 }
                 ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-                active:scale-95
+                active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1
+                dark:focus:ring-offset-surface-primary
               `}
+              aria-label={`Distribute ${option.a} points to A and ${option.b} points to B`}
             >
               {isRTL ? option.labelB : option.labelA}
             </button>
@@ -140,39 +152,39 @@ export function SAISDistribution({
       </div>
       
       {/* Option B */}
-      <div 
-        className={`
-          p-4 rounded-lg border-2 transition-all
-          ${pointsB > pointsA 
-            ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20' 
-            : 'border-gray-200 dark:border-gray-700'
-          }
-        `}
+      <Card 
+        variant={pointsB > pointsA ? 'selected' : 'default'}
+        className="p-4 transition-all duration-200"
       >
-        <div className="flex items-start gap-3 mb-2">
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <div className="flex items-start gap-3 mb-2 rtl:flex-row-reverse">
+          <Label className="text-content-tertiary">
             {isRTL ? 'ب' : 'B'}
-          </span>
-          <p className={`flex-1 text-gray-700 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+          </Label>
+          <Text className="flex-1 text-content-primary">
             {optionB}
-          </p>
+          </Text>
         </div>
-        <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        <div className="flex items-center gap-2 rtl:flex-row-reverse">
+          <span className="text-2xl font-bold text-primary">
             {pointsB}
           </span>
-          <span className="text-sm text-gray-500">
+          <Text variant="small" className="text-content-tertiary">
             {t('assessment.sais.points', { defaultValue: 'points' })}
-          </span>
+          </Text>
         </div>
-      </div>
+      </Card>
       
       {/* Validation message */}
-      <div className={`text-center text-sm ${pointsA + pointsB === totalPoints ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-        {pointsA + pointsB === totalPoints
-          ? t('assessment.sais.validDistribution', { defaultValue: 'Distribution is valid (5 points total)' })
-          : t('assessment.sais.invalidDistribution', { defaultValue: `Invalid distribution: ${pointsA + pointsB} points (must be 5)` })
-        }
+      <div className="text-center">
+        <Text 
+          variant="small" 
+          className={pointsA + pointsB === totalPoints ? 'text-success' : 'text-error'}
+        >
+          {pointsA + pointsB === totalPoints
+            ? t('assessment.sais.validDistribution', { defaultValue: 'Distribution is valid (5 points total)' })
+            : t('assessment.sais.invalidDistribution', { defaultValue: `Invalid distribution: ${pointsA + pointsB} points (must be 5)` })
+          }
+        </Text>
       </div>
     </div>
   )

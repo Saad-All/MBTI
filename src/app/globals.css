@@ -2,25 +2,218 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design System Root Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light Mode Colors */
+  --background: theme('colors.neutral.50');
+  --foreground: theme('colors.neutral.900');
+  --card: theme('colors.white');
+  --card-foreground: theme('colors.neutral.900');
+  --popover: theme('colors.white');
+  --popover-foreground: theme('colors.neutral.900');
+  --primary: theme('colors.primary.600');
+  --primary-foreground: theme('colors.white');
+  --secondary: theme('colors.secondary.100');
+  --secondary-foreground: theme('colors.secondary.900');
+  --muted: theme('colors.neutral.100');
+  --muted-foreground: theme('colors.neutral.500');
+  --accent: theme('colors.accent.100');
+  --accent-foreground: theme('colors.accent.900');
+  --destructive: theme('colors.error.600');
+  --destructive-foreground: theme('colors.white');
+  --border: theme('colors.neutral.200');
+  --input: theme('colors.neutral.200');
+  --ring: theme('colors.primary.600');
+  --radius: 0.5rem;
+  
+  /* Additional semantic colors for components */
+  --surface-primary: theme('colors.white');
+  --surface-secondary: theme('colors.neutral.50');
+  --surface-tertiary: theme('colors.neutral.100');
+  --content-primary: theme('colors.neutral.900');
+  --content-secondary: theme('colors.neutral.700');
+  --content-tertiary: theme('colors.neutral.600');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Dark Mode Colors */
+.dark {
+  --background: theme('colors.dark.background');
+  --foreground: theme('colors.dark.text.primary');
+  --card: theme('colors.dark.card');
+  --card-foreground: theme('colors.dark.text.primary');
+  --popover: theme('colors.dark.card');
+  --popover-foreground: theme('colors.dark.text.primary');
+  --primary: theme('colors.primary.500');
+  --primary-foreground: theme('colors.white');
+  --secondary: theme('colors.secondary.800');
+  --secondary-foreground: theme('colors.secondary.100');
+  --muted: theme('colors.neutral.800');
+  --muted-foreground: theme('colors.neutral.400');
+  --accent: theme('colors.accent.800');
+  --accent-foreground: theme('colors.accent.100');
+  --destructive: theme('colors.error.500');
+  --destructive-foreground: theme('colors.white');
+  --border: theme('colors.dark.border');
+  --input: theme('colors.dark.border');
+  --ring: theme('colors.primary.500');
+  
+  /* Additional semantic colors for dark mode */
+  --surface-primary: theme('colors.dark.background');
+  --surface-secondary: theme('colors.dark.card');
+  --surface-tertiary: theme('colors.neutral.800');
+  --content-primary: theme('colors.dark.text.primary');
+  --content-secondary: theme('colors.dark.text.secondary');
+  --content-tertiary: theme('colors.dark.text.muted');
+}
+
+/* Base Layer Styles */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  
+  body {
+    @apply bg-neutral-50 text-neutral-900 dark:bg-dark-background dark:text-dark-text-primary;
+    @apply font-sans;
+  }
+  
+  /* Typography Hierarchy */
+  h1 {
+    @apply text-h1 text-neutral-900 dark:text-dark-text-primary;
+  }
+  
+  h2 {
+    @apply text-h2 text-neutral-900 dark:text-dark-text-primary;
+  }
+  
+  h3 {
+    @apply text-h3 text-neutral-900 dark:text-dark-text-primary;
+  }
+  
+  p {
+    @apply text-body text-neutral-700 dark:text-dark-text-secondary;
+  }
+  
+  small {
+    @apply text-small text-neutral-600 dark:text-dark-text-muted;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Component Layer */
+@layer components {
+  /* Card Component */
+  .card {
+    @apply bg-white dark:bg-dark-card rounded-xl shadow-md dark:shadow-dark-md;
+    @apply border border-neutral-200 dark:border-dark-border;
+    @apply p-6 tablet:p-8;
+  }
+  
+  /* Button Base */
+  .btn {
+    @apply inline-flex items-center justify-center;
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply transition-all duration-200 ease-out;
+    @apply touch-target no-select;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  /* Button Variants */
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+    @apply focus:ring-primary-500;
+    @apply active:scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply btn bg-neutral-200 text-neutral-700;
+    @apply hover:bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-300;
+    @apply dark:hover:bg-neutral-600;
+    @apply focus:ring-neutral-500;
+  }
+  
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-neutral-100;
+    @apply dark:hover:bg-neutral-800;
+    @apply focus:ring-neutral-500;
+  }
+  
+  /* Input Component */
+  .input {
+    @apply w-full px-4 py-3 rounded-lg;
+    @apply bg-white dark:bg-dark-card;
+    @apply border border-neutral-300 dark:border-dark-border;
+    @apply text-neutral-900 dark:text-dark-text-primary;
+    @apply placeholder:text-neutral-400 dark:placeholder:text-neutral-600;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply transition-colors duration-200;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    @apply w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden;
+  }
+  
+  .progress-bar-fill {
+    @apply h-full bg-primary-600 dark:bg-primary-500;
+    @apply transition-all duration-400 ease-out;
+  }
+  
+  /* Question Card */
+  .question-card {
+    @apply card;
+    @apply animate-question-transition;
+  }
+  
+  /* Format Card */
+  .format-card {
+    @apply card cursor-pointer;
+    @apply border-2 border-neutral-200 dark:border-neutral-700;
+    @apply hover:border-primary-500 dark:hover:border-primary-400;
+    @apply hover:shadow-lg dark:hover:shadow-dark-lg;
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .format-card.selected {
+    @apply border-primary-600 dark:border-primary-500;
+    @apply bg-primary-50 dark:bg-primary-950/20;
+  }
 }
 
-/* RTL support for Arabic */
+/* Utility Layer Extensions */
+@layer utilities {
+  /* Text Balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Animation Utilities */
+  .animate-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .animate-fast {
+    @apply transition-all duration-150 ease-in-out;
+  }
+  
+  /* Gradient Backgrounds */
+  .gradient-primary {
+    @apply bg-gradient-to-br from-primary-50 to-accent-50;
+    @apply dark:from-primary-950 dark:to-accent-950;
+  }
+  
+  .gradient-secondary {
+    @apply bg-gradient-to-br from-neutral-50 to-neutral-100;
+    @apply dark:from-neutral-900 dark:to-neutral-800;
+  }
+  
+  /* Loading Spinner */
+  .spinner {
+    @apply w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin;
+    @apply dark:border-primary-800 dark:border-t-primary-400;
+  }
+}
+
+/* RTL Support */
 [dir="rtl"] {
   direction: rtl;
   text-align: right;
@@ -31,50 +224,113 @@ body {
   text-align: left;
 }
 
-/* Arabic font support */
-html[lang="ar"] {
-  font-family: "IBM Plex Arabic", "Noto Sans Arabic", Arial, sans-serif;
+/* MBTI Code - Always LTR */
+.mbti-code {
+  @apply font-mono text-h3 tracking-wider;
+  direction: ltr !important;
+  text-align: center !important;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Arabic Font Support */
+html[lang="ar"] {
+  font-family: theme('fontFamily.arabic');
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  @apply font-arabic;
+  letter-spacing: 0;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus Visible */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  @apply dark:ring-offset-dark-background;
+}
+
+/* Selection */
+::selection {
+  @apply bg-primary-200 text-primary-900;
+  @apply dark:bg-primary-800 dark:text-primary-100;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-400 dark:bg-neutral-600 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-500 dark:bg-neutral-500;
+}
+
+/* Safe Area Support */
+.safe-area-inset {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    @apply bg-white text-black;
   }
   
-  /* Mobile-first responsive utilities */
-  /* Safe area padding for iOS */
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
+  .no-print {
+    display: none !important;
   }
   
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
+  .card {
+    @apply shadow-none border-black;
+    page-break-inside: avoid;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: theme('colors.primary.700');
+    --border: theme('colors.neutral.400');
   }
   
-  .safe-left {
-    padding-left: env(safe-area-inset-left);
+  .dark {
+    --primary: theme('colors.primary.300');
+    --border: theme('colors.neutral.600');
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
   
-  .safe-right {
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  /* Touch-friendly tap targets */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Prevent text selection on interactive elements */
-  .no-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  /* Smooth scrolling for mobile */
-  .smooth-scroll {
-    -webkit-overflow-scrolling: touch;
+  /* Preserve essential animations */
+  .animate-spin {
+    animation-duration: 1.5s !important;
   }
 }

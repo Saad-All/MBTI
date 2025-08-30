@@ -9,6 +9,10 @@ import { QuestionCard } from "@/components/assessment/QuestionCard";
 import { SAISDistribution } from "@/components/assessment/SAISDistribution";
 import { ProgressBar } from "@/components/assessment/ProgressBar";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import { Button } from "@/components/ui/Button";
+import { H2, H3, Text, Small } from "@/components/ui/Typography";
+import { Card } from "@/components/ui/Card";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { QuestionResponse, MBTIDimension } from "@/lib/types";
 import saisArQuestions from "@/data/questions/sais-ar.json";
 import saisEnQuestions from "@/data/questions/sais-en.json";
@@ -174,44 +178,45 @@ export default function SAISAssessment({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800">
+    <PageLayout containerSize="md" className="bg-gradient-accent">
       {/* Header */}
-      <header className="absolute top-0 right-0 p-6">
-        <LanguageToggle />
+      <header className="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-4 sm:p-6">
+        <LanguageToggle variant="compact" />
       </header>
 
-      <div className="container mx-auto px-4 py-8 md:py-16 max-w-3xl safe-bottom">
+      <div className="pt-16 pb-8 md:pt-20 md:pb-16">
         {/* Title and Instructions */}
         {currentQuestionIndex === 0 && (
-          <div className="mb-8 text-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="mb-8 text-center animate-fade-in">
+            <H2 className="mb-4 text-content-primary">
               {intro.title}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            </H2>
+            <Text className="text-content-secondary mb-6">
               {intro.description}
-            </p>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
+            </Text>
+            <Card className="p-6 text-left rtl:text-right">
+              <H3 className="mb-3 text-content-primary">
                 {instructions.title}
-              </h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              </H3>
+              <ul className="space-y-2">
                 {instructions.examples.map((example, index) => (
                   <li
                     key={index}
-                    className={`${
-                      language === "ar" ? "text-right" : "text-left"
-                    }`}
+                    className="flex gap-2 rtl:flex-row-reverse"
                   >
-                    • {example}
+                    <span className="text-content-tertiary">•</span>
+                    <Small className="text-content-secondary">
+                      {example}
+                    </Small>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Card>
           </div>
         )}
 
         {/* Progress */}
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <ProgressBar
             current={currentTotalQuestion}
             total={totalQuestions}
@@ -225,52 +230,47 @@ export default function SAISAssessment({
         </div>
 
         {/* Question */}
-        <QuestionCard question={currentQuestion.statement}>
-          <SAISDistribution
-            optionA={currentQuestion.optionA}
-            optionB={currentQuestion.optionB}
-            optionATendency={currentQuestion.optionATendency}
-            optionBTendency={currentQuestion.optionBTendency}
-            initialDistribution={currentDistribution}
-            onDistribute={handleDistribute}
-          />
-        </QuestionCard>
+        <div className="animate-fade-in animation-delay-100">
+          <QuestionCard question={currentQuestion.statement}>
+            <SAISDistribution
+              optionA={currentQuestion.optionA}
+              optionB={currentQuestion.optionB}
+              optionATendency={currentQuestion.optionATendency}
+              optionBTendency={currentQuestion.optionBTendency}
+              initialDistribution={currentDistribution}
+              onDistribute={handleDistribute}
+            />
+          </QuestionCard>
+        </div>
 
         {/* Navigation */}
-        <div className="mt-8 flex justify-between gap-4">
-          <button
+        <div className="mt-8 flex flex-col sm:flex-row justify-between gap-4 animate-fade-in animation-delay-200">
+          <Button
             onClick={handleBack}
-            className="px-4 md:px-6 py-3 rounded-lg font-medium transition-all
-              touch-target no-select flex-1 md:flex-initial
-              bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 
-              hover:bg-gray-300 dark:hover:bg-gray-600 active:scale-[0.98]"
+            variant="secondary"
+            size="lg"
+            className="w-full sm:w-auto"
           >
             {t("assessment.sais.back", { defaultValue: "Back" })}
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleNext}
             disabled={
               currentDistribution.pointsA + currentDistribution.pointsB !== 5
             }
-            className={`
-              px-4 md:px-6 py-3 rounded-lg font-medium transition-all
-              touch-target no-select flex-1 md:flex-initial
-              ${
-                currentDistribution.pointsA + currentDistribution.pointsB === 5
-                  ? "bg-purple-600 text-white hover:bg-purple-700 active:scale-[0.98]"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-              }
-            `}
+            variant="accent"
+            size="lg"
+            className="w-full sm:w-auto"
           >
             {isLastQuestion
               ? t("assessment.sais.complete", {
                   defaultValue: "Complete Assessment",
                 })
               : t("assessment.sais.next", { defaultValue: "Next" })}
-          </button>
+          </Button>
         </div>
       </div>
-    </main>
+    </PageLayout>
   );
 }

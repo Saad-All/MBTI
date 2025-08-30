@@ -9,6 +9,9 @@
       "Bash(pkill:*)",
       "Bash(cd:*)",
       "Bash(cd:*)",
+      "Bash(cd:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run type-check:*)",
       "Bash(cd:*)"
     ],
     "deny": []

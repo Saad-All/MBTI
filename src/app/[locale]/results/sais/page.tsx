@@ -6,6 +6,10 @@ import { useTranslation } from "react-i18next";
 import { useAssessmentStore } from "@/lib/stores/assessment-store";
 import { SAISResultsDisplay } from "@/components/results/SAISResultsDisplay";
 import { Button } from "@/components/ui/Button";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { Card } from "@/components/ui/Card";
+import { H2, H3, Text } from "@/components/ui/Typography";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ScoringResult, Language, MBTIResults } from "@/lib/types";
 import { ConsciousnessCoachingService } from "@/lib/services/ConsciousnessCoachingService";
 
@@ -155,26 +159,26 @@ export default function SAISResultsPage({
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 flex items-center justify-center">
-        <div className="text-center text-white">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold mb-2">
+      <PageLayout containerSize="sm" centered className="bg-gradient-accent">
+        <div className="text-center">
+          <LoadingSpinner size="xl" color="white" />
+          <H2 className="text-white mt-6 mb-2">
             جاري حساب نتائج الوعي...
-          </h2>
-          <p className="text-sm opacity-90">
+          </H2>
+          <Text className="text-white/90">
             يتم تحليل إجاباتك باستخدام منهجية SAIS
-          </p>
+          </Text>
         </div>
-      </div>
+      </PageLayout>
     );
   }
 
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="text-red-500 mb-4">
+      <PageLayout containerSize="sm" centered>
+        <Card className="p-8 text-center">
+          <div className="text-error mb-4">
             <svg
               className="w-16 h-16 mx-auto"
               fill="none"
@@ -189,96 +193,94 @@ export default function SAISResultsPage({
               />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">
+          <H2 className="text-content-primary mb-2">
             خطأ في النتائج
-          </h2>
-          <p className="text-gray-600 mb-6">{error}</p>
+          </H2>
+          <Text className="text-content-secondary mb-6">{error}</Text>
           <Button onClick={handleStartOver} variant="primary">
             ابدأ من جديد
           </Button>
-        </div>
-      </div>
+        </Card>
+      </PageLayout>
     );
   }
 
   // Results display
   if (!results) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <PageLayout containerSize="sm" centered>
         <div className="text-center">
-          <p className="text-gray-600">لا توجد نتائج للعرض</p>
-          <Button onClick={handleStartOver} className="mt-4">
+          <Text className="text-content-tertiary mb-4">لا توجد نتائج للعرض</Text>
+          <Button onClick={handleStartOver}>
             ابدأ من جديد
           </Button>
         </div>
-      </div>
+      </PageLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
+    <PageLayout containerSize="xl" className="bg-gradient-accent-subtle">
+      <div className="py-8 md:py-12">
         {/* SAIS Consciousness Results Display */}
-        <SAISResultsDisplay
-          results={results}
-          language={language as Language}
-          className="mb-8"
-        />
+        <div className="animate-fade-in">
+          <SAISResultsDisplay
+            results={results}
+            language={language as Language}
+            className="mb-8"
+          />
+        </div>
 
         {/* Action Buttons */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl p-6 shadow-lg">
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">
-                🌟 رحلة الوعي مستمرة
-              </h3>
-              <p className="text-gray-600">
-                اكتشفت نمط شخصيتك من منظور الوعي العميق. ما هي خطوتك التالية؟
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* Coaching Integration */}
-              <Button
-                onClick={handleGoToCoaching}
-                variant="primary"
-                size="lg"
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
-              >
-                🧭 استكشف تطوير الوعي مع مدرب نفسي
-              </Button>
-
-              {/* Chat with AI Coach */}
-              <Button
-                onClick={() => {
-                  // Pass consciousness context to chat
-                  const chatUrl = new URLSearchParams({
-                    mbtiType: results.mbtiType,
-                    methodology: "sais",
-                    consciousness: JSON.stringify(results.consciousnessProfile),
-                  });
-                  router.push(`/${locale}/chat?${chatUrl.toString()}`);
-                }}
-                variant="outline"
-                size="lg"
-                className="border-2 border-purple-300 text-purple-700 hover:bg-purple-50"
-              >
-                💬 تحدث مع مرشد الوعي الذكي
-              </Button>
-
-              {/* Start Over */}
-              <Button
-                onClick={handleStartOver}
-                variant="ghost"
-                size="lg"
-                className="text-gray-600 hover:bg-gray-100"
-              >
-                🔄 ابدأ رحلة جديدة
-              </Button>
-            </div>
+        <Card className="p-6 md:p-8 max-w-4xl mx-auto animate-fade-in animation-delay-200">
+          <div className="text-center mb-6">
+            <H3 className="text-content-primary mb-2">
+              🌟 رحلة الوعي مستمرة
+            </H3>
+            <Text className="text-content-secondary">
+              اكتشفت نمط شخصيتك من منظور الوعي العميق. ما هي خطوتك التالية؟
+            </Text>
           </div>
-        </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Coaching Integration */}
+            <Button
+              onClick={handleGoToCoaching}
+              variant="accent"
+              size="lg"
+              className="shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all"
+            >
+              🧭 استكشف تطوير الوعي مع مدرب نفسي
+            </Button>
+
+            {/* Chat with AI Coach */}
+            <Button
+              onClick={() => {
+                // Pass consciousness context to chat
+                const chatUrl = new URLSearchParams({
+                  mbtiType: results.mbtiType,
+                  methodology: "sais",
+                  consciousness: JSON.stringify(results.consciousnessProfile),
+                });
+                router.push(`/${locale}/chat?${chatUrl.toString()}`);
+              }}
+              variant="secondary"
+              size="lg"
+            >
+              💬 تحدث مع مرشد الوعي الذكي
+            </Button>
+
+            {/* Start Over */}
+            <Button
+              onClick={handleStartOver}
+              variant="ghost"
+              size="lg"
+            >
+              🔄 ابدأ رحلة جديدة
+            </Button>
+          </div>
+        </Card>
       </div>
-    </div>
+    </PageLayout>
   );
 }
