@@ -188,9 +188,7 @@ export default function SAISAssessment({
         {/* Title and Instructions */}
         {currentQuestionIndex === 0 && (
           <div className="mb-8 text-center animate-fade-in">
-            <H2 className="mb-4 text-content-primary">
-              {intro.title}
-            </H2>
+            <H2 className="mb-4 text-content-primary">{intro.title}</H2>
             <Text className="text-content-secondary mb-6">
               {intro.description}
             </Text>
@@ -200,14 +198,9 @@ export default function SAISAssessment({
               </H3>
               <ul className="space-y-2">
                 {instructions.examples.map((example, index) => (
-                  <li
-                    key={index}
-                    className="flex gap-2 rtl:flex-row-reverse"
-                  >
+                  <li key={index} className="flex gap-2 rtl:flex-row-reverse">
                     <span className="text-content-tertiary">•</span>
-                    <Small className="text-content-secondary">
-                      {example}
-                    </Small>
+                    <Small className="text-content-secondary">{example}</Small>
                   </li>
                 ))}
               </ul>

@@ -162,9 +162,7 @@ export default function SAISResultsPage({
       <PageLayout containerSize="sm" centered className="bg-gradient-accent">
         <div className="text-center">
           <LoadingSpinner size="xl" color="white" />
-          <H2 className="text-white mt-6 mb-2">
-            جاري حساب نتائج الوعي...
-          </H2>
+          <H2 className="text-white mt-6 mb-2">جاري حساب نتائج الوعي...</H2>
           <Text className="text-white/90">
             يتم تحليل إجاباتك باستخدام منهجية SAIS
           </Text>
@@ -193,9 +191,7 @@ export default function SAISResultsPage({
               />
             </svg>
           </div>
-          <H2 className="text-content-primary mb-2">
-            خطأ في النتائج
-          </H2>
+          <H2 className="text-content-primary mb-2">خطأ في النتائج</H2>
           <Text className="text-content-secondary mb-6">{error}</Text>
           <Button onClick={handleStartOver} variant="primary">
             ابدأ من جديد
@@ -210,10 +206,10 @@ export default function SAISResultsPage({
     return (
       <PageLayout containerSize="sm" centered>
         <div className="text-center">
-          <Text className="text-content-tertiary mb-4">لا توجد نتائج للعرض</Text>
-          <Button onClick={handleStartOver}>
-            ابدأ من جديد
-          </Button>
+          <Text className="text-content-tertiary mb-4">
+            لا توجد نتائج للعرض
+          </Text>
+          <Button onClick={handleStartOver}>ابدأ من جديد</Button>
         </div>
       </PageLayout>
     );
@@ -234,9 +230,7 @@ export default function SAISResultsPage({
         {/* Action Buttons */}
         <Card className="p-6 md:p-8 max-w-4xl mx-auto animate-fade-in animation-delay-200">
           <div className="text-center mb-6">
-            <H3 className="text-content-primary mb-2">
-              🌟 رحلة الوعي مستمرة
-            </H3>
+            <H3 className="text-content-primary mb-2">🌟 رحلة الوعي مستمرة</H3>
             <Text className="text-content-secondary">
               اكتشفت نمط شخصيتك من منظور الوعي العميق. ما هي خطوتك التالية؟
             </Text>
@@ -250,7 +244,7 @@ export default function SAISResultsPage({
               size="lg"
               className="shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all"
             >
-              🧭 استكشف تطوير الوعي مع مدرب نفسي
+              🧭 استكشف تطوير الذات مع مدرب مختص
             </Button>
 
             {/* Chat with AI Coach */}
@@ -267,15 +261,11 @@ export default function SAISResultsPage({
               variant="secondary"
               size="lg"
             >
-              💬 تحدث مع مرشد الوعي الذكي
+              💬 تحدث مع مرشدك الذكي
             </Button>
 
             {/* Start Over */}
-            <Button
-              onClick={handleStartOver}
-              variant="ghost"
-              size="lg"
-            >
+            <Button onClick={handleStartOver} variant="ghost" size="lg">
               🔄 ابدأ رحلة جديدة
             </Button>
           </div>
