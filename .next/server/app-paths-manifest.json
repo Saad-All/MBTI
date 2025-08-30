@@ -1,10 +1,11 @@
 {
+  "/api/assessment/calculate-interim/route": "app/api/assessment/calculate-interim/route.js",
   "/api/assessment/calculate/route": "app/api/assessment/calculate/route.js",
+  "/[locale]/page": "app/[locale]/page.js",
   "/[locale]/assessment/core/page": "app/[locale]/assessment/core/page.js",
   "/[locale]/assessment/interim/page": "app/[locale]/assessment/interim/page.js",
   "/[locale]/assessment/format/page": "app/[locale]/assessment/format/page.js",
   "/[locale]/assessment/sais/page": "app/[locale]/assessment/sais/page.js",
-  "/[locale]/results/sais/page": "app/[locale]/results/sais/page.js",
-  "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/assessment/processing/page": "app/[locale]/assessment/processing/page.js"
+  "/[locale]/assessment/processing/page": "app/[locale]/assessment/processing/page.js",
+  "/[locale]/results/sais/page": "app/[locale]/results/sais/page.js"
 }

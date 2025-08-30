@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"lib\\\\services\\\\MBTIContentService.ts -> @/data/results/mbti-comprehensive-content.json\":{\"id\":\"lib\\\\services\\\\MBTIContentService.ts -> @/data/results/mbti-comprehensive-content.json\",\"files\":[\"static/chunks/_app-pages-browser_src_data_results_mbti-comprehensive-content_json.js\"]}}"

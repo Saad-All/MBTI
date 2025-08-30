@@ -4,6 +4,25 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ScoringResult, ConsciousnessProfile, Language } from "@/lib/types";
 import { ConsciousnessInsightsService } from "@/lib/services/ConsciousnessInsightsService";
+import { EnhancedSAISResultsDisplay } from "./EnhancedSAISResultsDisplay";
+
+// Feature flags for enhanced SAIS results
+const ENHANCED_SAIS_FEATURE_FLAGS = {
+  // Core functionality flags
+  ENABLE_ENHANCED_SAIS_RESULTS: process.env.NEXT_PUBLIC_ENABLE_ENHANCED_SAIS_RESULTS === 'true',
+  ENABLE_ACCURATE_CALCULATIONS: process.env.NEXT_PUBLIC_ENABLE_ACCURATE_CALCULATIONS === 'true',
+  ENABLE_MBTI_CONTENT_INTEGRATION: process.env.NEXT_PUBLIC_ENABLE_MBTI_CONTENT_INTEGRATION === 'true',
+  
+  // Content and display flags
+  ENABLE_COMPREHENSIVE_INSIGHTS: process.env.NEXT_PUBLIC_ENABLE_COMPREHENSIVE_INSIGHTS === 'true',
+  ENABLE_SAIS_METHODOLOGY_CONTEXT: process.env.NEXT_PUBLIC_ENABLE_SAIS_METHODOLOGY_CONTEXT === 'true',
+  ENABLE_ENHANCED_VISUAL_DESIGN: process.env.NEXT_PUBLIC_ENABLE_ENHANCED_VISUAL_DESIGN === 'true',
+  
+  // Performance and compatibility flags
+  ENABLE_CONTENT_CACHING: process.env.NEXT_PUBLIC_ENABLE_CONTENT_CACHING === 'true',
+  ENABLE_MOBILE_OPTIMIZATIONS: process.env.NEXT_PUBLIC_ENABLE_MOBILE_OPTIMIZATIONS === 'true',
+  ENABLE_ARABIC_ENHANCEMENTS: process.env.NEXT_PUBLIC_ENABLE_ARABIC_ENHANCEMENTS === 'true'
+};
 
 interface SAISResultsDisplayProps {
   results: ScoringResult;
@@ -17,6 +36,13 @@ export const SAISResultsDisplay: React.FC<SAISResultsDisplayProps> = ({
   className = "",
 }) => {
   const { t } = useTranslation();
+
+  // Use enhanced component if feature flag is enabled
+  if (ENHANCED_SAIS_FEATURE_FLAGS.ENABLE_ENHANCED_SAIS_RESULTS) {
+    return <EnhancedSAISResultsDisplay results={results} language={language} className={className} />;
+  }
+
+  // Original implementation follows below
   const insightsService = ConsciousnessInsightsService.getInstance();
   const insights = insightsService.getConsciousnessInsights(
     results.mbtiType,

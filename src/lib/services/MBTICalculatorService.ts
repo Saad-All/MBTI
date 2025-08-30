@@ -113,17 +113,9 @@ export class MBTICalculatorService {
       if (methodology === 'sais') {
         totalPossiblePoints = 15 // 3 questions × 5 points per question
         
-        // Calculate consciousness percentage based on tendency tracking for SAIS
-        let winningScore = 0
-        for (const response of dimensionResponses) {
-          if (response.tendency === preference) {
-            // Add the distribution points for this tendency
-            if (response.responseType === 'distribution') {
-              const points = response.selectedOption === 'A' ? response.distributionA! : response.distributionB!
-              winningScore += points
-            }
-          }
-        }
+        // For SAIS, rawScoreA and rawScoreB already contain the actual distribution points
+        // The preference was determined based on which score is higher
+        const winningScore = preference === dimension.split('/')[0] ? rawScoreA : rawScoreB
         
         consciousnessPercentage = Math.round((winningScore / totalPossiblePoints) * 100)
         consciousnessDomain = this.consciousnessDomains[dimension].name
