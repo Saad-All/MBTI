@@ -31,6 +31,16 @@
     }
   },
   "assessment": {
+    "processing": {
+      "title": "Calculating your personality type...",
+      "subtitle": "Please wait while we analyze your responses",
+      "error": {
+        "title": "Something went wrong",
+        "message": "We were unable to calculate your results. Please try again.",
+        "retry": "Try Again",
+        "back": "Back to Assessment"
+      }
+    },
     "sais": {
       "title": "SAIS Assessment",
       "progress": "Question {{current}} of {{total}}",

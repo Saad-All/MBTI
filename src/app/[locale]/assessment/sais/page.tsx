@@ -149,10 +149,11 @@ export default function SAISAssessment({
     // Add response to store
     addResponse(response);
 
-    // Navigate to next question or SAIS consciousness results
+    // Navigate to next question or processing page
     if (isLastQuestion) {
+      // Navigate to processing page instead of direct results
       setTimeout(() => {
-        router.push(`/${locale}/results/sais`);
+        router.push(`/${locale}/assessment/processing`);
       }, 100);
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);

@@ -34,6 +34,18 @@ export interface AssessmentState {
     completedQuestions: number
     questionPool: string
   }
+  // Final calculation results
+  results?: {
+    mbtiType: string
+    scores: {
+      'E/I': number
+      'S/N': number
+      'T/F': number
+      'J/P': number
+    }
+    confidence: number
+    methodology: string
+  }
 }
 
 export interface UIState {
@@ -63,6 +75,7 @@ export interface AppStore {
   completeAssessment: () => void
   resetAssessment: () => void
   setInterimResults: (results: AssessmentState['interimResults']) => void
+  setResults: (results: AssessmentState['results']) => void
   setStartTime: (time: Date) => void
   setCompletionTime: (time: Date) => void
   setCalculatedType: (type: string) => void
@@ -295,6 +308,11 @@ export const useAppStore = create<AppStore>()(
             assessment: { ...state.assessment, interimResults }
           })),
 
+        setResults: (results) =>
+          set((state) => ({
+            assessment: { ...state.assessment, results }
+          })),
+
         setStartTime: (startTime) =>
           set((state) => ({
             assessment: { ...state.assessment, startTime }
@@ -422,6 +440,7 @@ export const useAssessmentStore = () => useAppStore((state) => ({
   confidence: state.assessment.confidence,
   interimResults: state.assessment.interimResults,
   formatProgress: state.assessment.formatProgress,
+  results: state.assessment.results,
   setSessionId: state.setSessionId,
   setCurrentStep: state.setCurrentStep,
   setLanguage: state.setLanguage,
@@ -437,6 +456,7 @@ export const useAssessmentStore = () => useAppStore((state) => ({
   completeAssessment: state.completeAssessment,
   resetAssessment: state.resetAssessment,
   setInterimResults: state.setInterimResults,
+  setResults: state.setResults,
   setStartTime: state.setStartTime,
   setCompletionTime: state.setCompletionTime,
   setCalculatedType: state.setCalculatedType,
