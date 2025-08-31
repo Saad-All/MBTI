@@ -27,7 +27,7 @@ const spinnerVariants = cva(
 )
 
 export interface LoadingSpinnerProps 
-  extends HTMLAttributes<HTMLDivElement>,
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
     VariantProps<typeof spinnerVariants> {
   label?: string
 }

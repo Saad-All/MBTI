@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { forwardRef, InputHTMLAttributes } from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { forwardRef, InputHTMLAttributes } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 const inputVariants = cva(
   `
@@ -26,66 +26,82 @@ const inputVariants = cva(
         success: `
           border-success hover:border-success
           focus:border-success focus:ring-success
-        `
+        `,
       },
       size: {
-        sm: 'text-sm py-2 px-3',
-        md: 'text-base py-3 px-4',
-        lg: 'text-lg py-4 px-5'
-      }
+        sm: "text-sm py-2 px-3",
+        md: "text-base py-3 px-4",
+        lg: "text-lg py-4 px-5",
+      },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'md'
-    }
+      variant: "default",
+      size: "md",
+    },
   }
-)
+);
 
 export interface InputProps
-  extends InputHTMLAttributes<HTMLInputElement>,
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {
-  label?: string
-  error?: string
-  success?: string
-  hint?: string
+  label?: string;
+  error?: string;
+  success?: string;
+  hint?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, size, label, error, success, hint, id, ...props }, ref) => {
-    const inputId = id || props.name
-    const hasError = !!error
-    const hasSuccess = !!success && !hasError
-    
-    const currentVariant = hasError ? 'error' : hasSuccess ? 'success' : variant
+  (
+    { className, variant, size, label, error, success, hint, id, ...props },
+    ref
+  ) => {
+    const inputId = id || props.name;
+    const hasError = !!error;
+    const hasSuccess = !!success && !hasError;
+
+    const currentVariant = hasError
+      ? "error"
+      : hasSuccess
+      ? "success"
+      : variant;
 
     return (
       <div className="w-full">
         {label && (
-          <label 
+          <label
             htmlFor={inputId}
             className="block text-sm font-medium text-content-primary mb-2"
           >
             {label}
             {props.required && (
-              <span className="text-error ml-1" aria-label="required">*</span>
+              <span className="text-error ml-1" aria-label="required">
+                *
+              </span>
             )}
           </label>
         )}
-        
+
         <input
           ref={ref}
           id={inputId}
-          className={inputVariants({ variant: currentVariant, size, className })}
+          className={inputVariants({
+            variant: currentVariant,
+            size,
+            className,
+          })}
           aria-invalid={hasError}
           aria-describedby={
-            hasError ? `${inputId}-error` : 
-            hasSuccess ? `${inputId}-success` : 
-            hint ? `${inputId}-hint` : 
-            undefined
+            hasError
+              ? `${inputId}-error`
+              : hasSuccess
+              ? `${inputId}-success`
+              : hint
+              ? `${inputId}-hint`
+              : undefined
           }
           {...props}
         />
-        
+
         {(error || success || hint) && (
           <div className="mt-2 text-sm">
             {error && (
@@ -106,8 +122,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </div>
         )}
       </div>
-    )
+    );
   }
-)
+);
 
-Input.displayName = 'Input'
+Input.displayName = "Input";

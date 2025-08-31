@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/Button'
 import { storageService } from '@/lib/services/StorageService'
@@ -43,7 +43,7 @@ export function RecoveryDialog({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const checkForExistingSession = (sessionId: string) => {
+  const checkForExistingSession = useCallback((sessionId: string) => {
     setIsLoading(true)
     setError(null)
 
@@ -78,7 +78,7 @@ export function RecoveryDialog({
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [onClose])
   
   const getExactPosition = (sessionData: any) => {
     if (!sessionData) return undefined
