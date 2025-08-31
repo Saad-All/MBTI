@@ -90,9 +90,12 @@ export default function SAISAssessment({
 
   // Update progress
   useEffect(() => {
+    const totalCoreQuestions = 4;
+    const currentTotalQuestion = totalCoreQuestions + currentQuestionIndex + 1;
+    const totalQuestions = totalCoreQuestions + questions.length;
     const progress = (currentTotalQuestion / totalQuestions) * 100;
     setProgress(progress);
-  }, [currentTotalQuestion, totalQuestions, setProgress]);
+  }, [currentQuestionIndex, questions.length, setProgress]);
 
   // Check if current question was already answered
   useEffect(() => {

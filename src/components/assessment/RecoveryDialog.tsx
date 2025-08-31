@@ -43,44 +43,7 @@ export function RecoveryDialog({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const checkForExistingSession = useCallback((sessionId: string) => {
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      // Check localStorage/sessionStorage for existing session
-      const result = storageService.getItem(sessionId)
-      
-      if (result.success && result.data) {
-        // Check session validity with SessionService
-        const sessionInfo = SessionService.getSessionData()
-        const isExpired = sessionInfo ? SessionService.isSessionExpired(sessionInfo) : false
-        
-        // Determine exact position for recovery
-        const exactPosition = getExactPosition(result.data)
-        
-        setRecoveryData({
-          sessionData: result.data,
-          lastSaved: result.data.lastModified ? new Date(result.data.lastModified) : new Date(),
-          isExpired,
-          layer: result.layer || 'localStorage',
-          sessionPhase: sessionInfo?.phase || 'core',
-          exactPosition
-        })
-      } else {
-        // No session found
-        setRecoveryData(null)
-        onClose() // Close dialog if no session to recover
-      }
-    } catch (error) {
-      console.error('Recovery check failed:', error)
-      setError('Failed to check for existing session')
-    } finally {
-      setIsLoading(false)
-    }
-  }, [onClose])
-  
-  const getExactPosition = (sessionData: any) => {
+  const getExactPosition = useCallback((sessionData: any) => {
     if (!sessionData) return undefined
     
     const { currentStep, selectedFormat, formatProgress, coreResponses = [], extendedResponses = [] } = sessionData
@@ -117,7 +80,44 @@ export function RecoveryDialog({
     }
     
     return undefined
-  }
+  }, [])
+  
+  const checkForExistingSession = useCallback((sessionId: string) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      // Check localStorage/sessionStorage for existing session
+      const result = storageService.getItem(sessionId)
+      
+      if (result.success && result.data) {
+        // Check session validity with SessionService
+        const sessionInfo = SessionService.getSessionData()
+        const isExpired = sessionInfo ? SessionService.isSessionExpired(sessionInfo) : false
+        
+        // Determine exact position for recovery
+        const exactPosition = getExactPosition(result.data)
+        
+        setRecoveryData({
+          sessionData: result.data,
+          lastSaved: result.data.lastModified ? new Date(result.data.lastModified) : new Date(),
+          isExpired,
+          layer: result.layer || 'localStorage',
+          sessionPhase: sessionInfo?.phase || 'core',
+          exactPosition
+        })
+      } else {
+        // No session found
+        setRecoveryData(null)
+        onClose() // Close dialog if no session to recover
+      }
+    } catch (error) {
+      console.error('Recovery check failed:', error)
+      setError('Failed to check for existing session')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [onClose, getExactPosition])
 
   useEffect(() => {
     if (isOpen && sessionId) {

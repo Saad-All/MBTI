@@ -82,8 +82,15 @@ export default function ProcessingPage() {
       }
     }
 
-    calculateResults()
-  }, [])
+    // Only run calculation if we have required data
+    if (sessionId && selectedFormat) {
+      calculateResults()
+    } else {
+      // Set error if missing required data
+      setError('Invalid session state')
+      setIsCalculating(false)
+    }
+  }, [coreResponses, extendedResponses, locale, processingStartTime, router, selectedFormat, sessionId])
 
   const handleRetry = () => {
     setError(null)
